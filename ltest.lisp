@@ -1,6 +1,6 @@
 (defpackage :ltest
     (:use :cl)
-    (:export :test-set :test-suite
+    (:export :test-set :test-suite :output-test
         :compare-v :compare :compare-not-v :compare-not :compare-any-v 
         :compare-any :compare-all-v :compare-all :compare-none-v :compare-none
         :assert-is-v :assert-is :assert-not-v :assert-not :assert-any-v 
@@ -29,15 +29,46 @@
 
 (in-package :ltest)
 
+(defparameter *output-file* nil)
+
+(defun output-test (&key test-suite output-file)
+    (if output-file
+        (progn
+            (setf *output-file* output-file)
+            (with-open-file (stream *output-file*
+                :direction :output
+                :if-exists :overwrite
+                :if-does-not-exist :create)
+            (let ((*standard-output* stream))
+                (eval test-suite))))
+        (eval test-suite)))
+
 #|
 Helper functions to print out test results
  |#
-
 (defun green (str) (format nil "~c[32m~a~c[0m" #\esc str #\esc))
 
 (defun yellow (str) (format nil "~c[33m~a~c[0m" #\esc str #\esc))
 
 (defun red (str) (format nil "~c[31m~a~c[0m" #\esc str #\esc))
+
+
+#|
+(defun green (str) 
+    (if (not *output-file*)
+        (format nil "~c[32m~a~c[0m" #\esc str #\esc)
+        str))
+
+(defun yellow (str) 
+    (if (not *output-file*)
+        (format nil "~c[33m~a~c[0m" #\esc str #\esc)
+        str))
+
+(defun red (str) 
+    (if (not *output-file*)
+        (format nil "~c[31m~a~c[0m" #\esc str #\esc)
+        str))
+ |#
 
 (defun pass (f-name var1 var2 &key (predicates nil) (test-name nil)) 
     (let ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
@@ -127,7 +158,7 @@ Helper functions to execute test-sets as part of a test-suite
                 (incf (gethash :sets result-acc 0))
                 (test-suite-execute (cdr test-sets) result-acc)))))
 
- (defun test-suite (&rest test-sets) 
+ (defun test-suite (&key test-sets) 
     (show-test-suite-result (test-suite-execute test-sets (make-hash-table))))
 
 #|
