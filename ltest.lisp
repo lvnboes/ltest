@@ -49,22 +49,6 @@ Wrapper to optonally write to a specific output file
         (setf result (eval test-suite)))
         result
     ))
-#|
-(defun to-output (&key test-suite output-file)
-    (if output-file
-        (progn
-            (setf *output-file* output-file)
-            (with-open-file (stream *output-file*
-                :direction :output
-                :if-exists :overwrite
-                :if-does-not-exist :create)
-                (let* ((*standard-output* stream)
-                        (result (eval test-suite)))
-                    (progn
-                        (open-output-file output-file)
-                        result))))
-        (eval test-suite)))
- |#
 
 #|
 Helper functions to print out test results
