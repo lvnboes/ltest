@@ -1,6 +1,6 @@
 #!/usr/bin/sbcl --script
 
-(load "colour.lisp")
-(load "ltest.lisp")
-(load "test.lisp")
+(load "./src/colour.lisp")
+(load "./src/ltest.lisp")
+(load "./test/test.lisp")
 (test:test)
