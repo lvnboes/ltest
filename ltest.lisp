@@ -234,7 +234,7 @@ Basic comparison functions with and without validity check
 Test functions derived from the basic comparison functions
  |#
 
-;; check predicates on two value
+;; check predicates on two values
 
 (defun assert-is-v (value expected predicate &optional test-name)
     (funcall (compare-v value expected predicate) 
