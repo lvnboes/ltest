@@ -1,6 +1,6 @@
 (defpackage :ltest
     (:use :cl)
-    (:export :test-set :test-suite :output-test
+    (:export :test-set :test-suite :to-output
         :compare-v :compare :compare-not-v :compare-not :compare-any-v 
         :compare-any :compare-all-v :compare-all :compare-none-v :compare-none
         :assert-is-v :assert-is :assert-not-v :assert-not :assert-any-v 
@@ -31,7 +31,11 @@
 
 (defparameter *output-file* nil)
 
-(defun output-test (&key test-suite output-file)
+#|
+Wrapper to optonally write to a specific output file
+ |#
+
+(defun to-output (&key test-suite output-file)
     (if output-file
         (progn
             (setf *output-file* output-file)
@@ -46,14 +50,7 @@
 #|
 Helper functions to print out test results
  |#
-(defun green (str) (format nil "~c[32m~a~c[0m" #\esc str #\esc))
 
-(defun yellow (str) (format nil "~c[33m~a~c[0m" #\esc str #\esc))
-
-(defun red (str) (format nil "~c[31m~a~c[0m" #\esc str #\esc))
-
-
-#|
 (defun green (str) 
     (if (not *output-file*)
         (format nil "~c[32m~a~c[0m" #\esc str #\esc)
@@ -68,8 +65,7 @@ Helper functions to print out test results
     (if (not *output-file*)
         (format nil "~c[31m~a~c[0m" #\esc str #\esc)
         str))
- |#
-
+ 
 (defun pass (f-name var1 var2 &key (predicates nil) (test-name nil)) 
     (let ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
             (test-name-str (if test-name (format nil "~a | " test-name) "")))

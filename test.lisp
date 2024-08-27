@@ -5,7 +5,7 @@
 (in-package :test)
 
 (defun test ()
-    (ltest:output-test
+    (ltest:to-output
         :output-file "./test-output.txt"
         :test-suite '(ltest:test-suite
             :test-sets (list
