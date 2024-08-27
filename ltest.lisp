@@ -67,7 +67,9 @@ Helper functions to print out test results
                 (type-of var1) var1 (type-of var2) var2))))
 
 #|
-Basic comparison functions with validity check and without (fail in case of invalid)
+Basic comparison functions with and without validity check
+    With -v: results in INVALID if value doesn't match predicate
+    Without -v: results in FAIL if value doesn't match predicate
  |#
 
 (defun compare-v (val1 val2 pred)
