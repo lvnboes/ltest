@@ -29,14 +29,14 @@
 
 (in-package :ltest)
 
-(defparameter *output-file* nil)
+(defparameter *output-file* NIL)
 
 #|
 Wrapper to optonally write to a specific output file
  |#
 
 (defun to-output (&key test-suite output-file)
-    (let ((result nil))
+    (let ((result NIL))
         (if output-file
             (progn
                 (setf *output-file* output-file)
@@ -56,17 +56,17 @@ Helper functions to print out test results
 
 (defun green (str) 
     (if (not *output-file*)
-        (format nil "~c[92m~a~c[0m" #\esc str #\esc)
+        (format NIL "~c[92m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun yellow (str) 
     (if (not *output-file*)
-        (format nil "~c[93m~a~c[0m" #\esc str #\esc)
+        (format NIL "~c[93m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun red (str) 
     (if (not *output-file*)
-        (format nil "~c[91m~a~c[0m" #\esc str #\esc)
+        (format NIL "~c[91m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
@@ -74,22 +74,22 @@ Helper functions to print out test results
             (len2 (length str2))
             (len-padding (max (- len (+ len1 len2)) 0))
             (padding-str (make-string len-padding :element-type 'character :initial-element pad-char)))
-        (format nil "~a~a~a" str1 padding-str str2)))
+        (format NIL "~a~a~a" str1 padding-str str2)))
  
-(defun pass (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
+(defun pass (f-name var1 var2 &key (predicates NIL) (test-name NIL)) 
+    (let* ((pred-str (if predicates (format NIL " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format NIL "~a | " test-name) ""))
+            (result-str (format NIL
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
         (format T (green (insert-padding result-str " [PASS]")))
         :pass))
 
-(defun fail (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
+(defun fail (f-name var1 var2 &key (predicates NIL) (test-name NIL)) 
+    (let* ((pred-str (if predicates (format NIL " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format NIL "~a | " test-name) ""))
+            (result-str (format NIL
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
@@ -97,10 +97,10 @@ Helper functions to print out test results
         :fail))
     
 
-(defun invalid (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
+(defun invalid (f-name var1 var2 &key (predicates NIL) (test-name NIL)) 
+    (let* ((pred-str (if predicates (format NIL " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format NIL "~a | " test-name) ""))
+            (result-str (format NIL
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
@@ -144,7 +144,7 @@ Helper functions to execute test-sets as part of a test-suite
             (sets (gethash :sets result-hash-table 0))
             (all-passed? (eq (+ failed invalid) 0))
             (result-str
-                (format nil
+                (format NIL
                     "~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
                     sets passed failed invalid total)))
         (format T (if all-passed? (green result-str) (red result-str)))
@@ -176,6 +176,21 @@ Basic comparison functions with and without validity check
     Without -v: results in FAIL if value doesn't match predicate
  |#
 
+ (defun do-each (varlist exp pred)
+    (cond ((= (list-length varlist) 0) T)
+        ((pred (car varlist) exp) (do-each (cdr varlist) exp)))
+        (T NIL))
+
+ (defun do-some (varlist exp pred)
+    (cond ((= (list-length varlist) 0) NIL)
+        ((pred (car varlist) exp) T))
+        (T (do-each (cdr varlist) exp)))
+
+ (defun do-no (varlist exp pred)
+    (cond ((= (list-length varlist) 0) T)
+        ((pred (car varlist) exp) (do-each (cdr varlist) exp)))
+        (T NIL))
+
 (defun compare-v (val1 val2 pred)
     (handler-case
         (if (funcall pred val1 val2) 'pass 'fail)
@@ -196,18 +211,30 @@ Basic comparison functions with and without validity check
         (if (funcall pred val1 val2) 'fail 'pass)
         (error () 'fail)))
 
+(defun compare-t-v (val pred)
+    (compare-v val T pred))
+
+(defun compare-t (val pred)
+    (compare-v val T pred))
+
+(defun compare-nil-v (val pred)
+    (compare-v val NIL pred))
+
+(defun compare-nil (val pred)
+    (compare-v val NIL pred))
+
 (defun compare-any-v (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'fail)
             ((funcall (car p-list) val1 val2) 'pass)
-            (t (compare-any-v val1 val2 (cdr p-list))))
+            (T (compare-any-v val1 val2 (cdr p-list))))
         (error () 'invalid)))
 
 (defun compare-any (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'fail)
             ((funcall (car p-list) val1 val2) 'pass)
-            (t (compare-any val1 val2 (cdr p-list))))
+            (T (compare-any val1 val2 (cdr p-list))))
         (error () (compare-any val1 val2 (cdr p-list)))))
 
 (defun compare-all-v (val1 val2 p-list)
@@ -215,7 +242,7 @@ Basic comparison functions with and without validity check
         (cond ((= (list-length p-list) 0) 'pass)
             ((funcall (car p-list) val1 val2) 
                 (compare-all-v val1 val2 (cdr p-list)))
-            (t 'fail))
+            (T 'fail))
         (error () 'invalid)))
 
 (defun compare-all (val1 val2 p-list)
@@ -223,21 +250,21 @@ Basic comparison functions with and without validity check
         (cond ((= (list-length p-list) 0) 'pass)
             ((funcall (car p-list) val1 val2) 
                 (compare-all val1 val2 (cdr p-list)))
-            (t 'fail))
+            (T 'fail))
         (error () 'fail)))
 
 (defun compare-none-v (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'pass)
             ((funcall (car p-list) val1 val2) 'fail)
-            (t (compare-none-v val1 val2 (cdr p-list))))
+            (T (compare-none-v val1 val2 (cdr p-list))))
         (error () 'invalid)))
 
 (defun compare-none (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'pass)
             ((funcall (car p-list) val1 val2) 'fail)
-            (t (compare-none val1 val2 (cdr p-list))))
+            (T (compare-none val1 val2 (cdr p-list))))
         (error () (compare-none val1 val2 (cdr p-list)))))
 
 #|
@@ -594,3 +621,7 @@ Test functions derived from the basic comparison functions
 (defun assert-char-lessorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'char-equal 'char-lessp)) 
         'assert-char-lessorequalp value expected :test-name test-name))
+
+#|
+
+ |#
