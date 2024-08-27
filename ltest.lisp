@@ -88,7 +88,7 @@ Helper functions to execute tests as a set and print out the set result
             (incf (gethash (car tests) result-acc 0))
             (test-set-execute (cdr tests) result-acc))))
 
-(defun test-set (name &rest tests)
+(defun test-set (&key (name "Unnamed test set") (tests '()))
     (let ((results (test-set-execute tests (make-hash-table))))
         (show-test-set-result name results)))
 
