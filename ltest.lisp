@@ -1,5 +1,5 @@
 (defpackage :ltest
-    (:use :cl)
+    (:use :cl :colour)
     (:export :test-set :test-suite :to-output
         :compare-v :compare-each-v :compare-some-v :compare-no-v
         :compare :compare-each :compare-some :compare-no
@@ -75,21 +75,6 @@ Wrapper to optonally write to a specific output file
 Helper functions to print out test results
  |#
 
-(defun green (str) 
-    (if (not *output-file*)
-        (format nil "~c[92m~a~c[0m" #\esc str #\esc)
-        str))
-
-(defun yellow (str) 
-    (if (not *output-file*)
-        (format nil "~c[93m~a~c[0m" #\esc str #\esc)
-        str))
-
-(defun red (str) 
-    (if (not *output-file*)
-        (format nil "~c[91m~a~c[0m" #\esc str #\esc)
-        str))
-
 (defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
     (let* ((len1 (length str1))
             (len2 (length str2))
@@ -104,7 +89,9 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format t (green (insert-padding result-str " [PASS]")))
+        (format t (colour:bright-green 
+            (insert-padding result-str " [PASS]") 
+            *output-file*))
         :pass))
 
 (defun fail (f-name var1 var2 &key (predicates nil) (test-name nil)) 
@@ -114,7 +101,9 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format t (red (insert-padding result-str " [FAIL]")))
+        (format t (colour:bright-red 
+            (insert-padding result-str " [FAIL]")
+            *output-file*))
         :fail))
     
 
@@ -125,7 +114,9 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format t (yellow (insert-padding result-str " [INVD]")))
+        (format t (colour:bright-yellow 
+            (insert-padding result-str " [INVD]")
+            *output-file*))
         :invalid))
 
 #|
@@ -168,7 +159,13 @@ Helper functions to execute test-sets as part of a test-suite
                 (format nil
                     "~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
                     sets passed failed invalid total)))
-        (format t (if all-passed? (green result-str) (red result-str)))
+        (format t (if all-passed? 
+            (colour:bright-green 
+                result-str 
+                *output-file*) 
+            (colour:bright-red 
+                result-str 
+                *output-file*)))
         all-passed?))
 
  (defun test-suite-execute (test-sets result-acc)
