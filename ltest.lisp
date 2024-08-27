@@ -176,6 +176,8 @@ Basic comparison functions with and without validity check
     Without -v: results in FAIL if value doesn't match predicate
  |#
 
+ ;; iteration helpers
+
  (defun do-each (varlist exp pred)
     (cond ((= (list-length varlist) 0) T)
         ((pred (car varlist) exp) (do-each (cdr varlist) exp)))
@@ -190,6 +192,8 @@ Basic comparison functions with and without validity check
     (cond ((= (list-length varlist) 0) T)
         ((pred (car varlist) exp) (do-each (cdr varlist) exp)))
         (T NIL))
+
+;; comparison functions
 
 (defun compare-v (val1 val2 pred)
     (handler-case
@@ -237,6 +241,18 @@ Basic comparison functions with and without validity check
             (T (compare-any val1 val2 (cdr p-list))))
         (error () (compare-any val1 val2 (cdr p-list)))))
 
+(defun compare-any-t-v (val pred)
+    (compare-any-v (val T pred)))
+
+(defun compare-any-t (val pred)
+    (compare-any (val T pred)))
+
+(defun compare-any-nil-v (val pred)
+    (compare-any-v (val NIL pred)))
+
+(defun compare-any-nil (val pred)
+    (compare-any (val NIL pred)))
+
 (defun compare-all-v (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'pass)
@@ -253,6 +269,18 @@ Basic comparison functions with and without validity check
             (T 'fail))
         (error () 'fail)))
 
+(defun compare-all-t-v (val pred)
+    (compare-all-v (val T pred)))
+
+(defun compare-all-t (val pred)
+    (compare-all (val T pred)))
+
+(defun compare-all-nil-v (val pred)
+    (compare-all-v (val NIL pred)))
+
+(defun compare-all-nil (val pred)
+    (compare-all (val NIL pred)))
+
 (defun compare-none-v (val1 val2 p-list)
     (handler-case
         (cond ((= (list-length p-list) 0) 'pass)
@@ -266,6 +294,18 @@ Basic comparison functions with and without validity check
             ((funcall (car p-list) val1 val2) 'fail)
             (T (compare-none val1 val2 (cdr p-list))))
         (error () (compare-none val1 val2 (cdr p-list)))))
+
+(defun compare-none-t-v (val pred)
+    (compare-none-v (val T pred)))
+
+(defun compare-none-t (val pred)
+    (compare-none (val T pred)))
+
+(defun compare-none-nil-v (val pred)
+    (compare-none-v (val NIL pred)))
+
+(defun compare-none-nil (val pred)
+    (compare-none (val NIL pred)))
 
 #|
 Test functions derived from the basic comparison functions
@@ -621,7 +661,3 @@ Test functions derived from the basic comparison functions
 (defun assert-char-lessorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'char-equal 'char-lessp)) 
         'assert-char-lessorequalp value expected :test-name test-name))
-
-#|
-
- |#
