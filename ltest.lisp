@@ -1,6 +1,6 @@
 (defpackage :ltest
     (:use :cl)
-    (:export :test-set
+    (:export :test-set :test-suite
         :compare-v :compare :compare-not-v :compare-not :compare-any-v 
         :compare-any :compare-all-v :compare-all :compare-none-v :compare-none
         :assert-is-v :assert-is :assert-not-v :assert-not :assert-any-v 
@@ -79,7 +79,7 @@ Helper functions to execute tests as a set and print out the set result
             (invalid (gethash :invalid result-hash-table 0))
             (total (+ failed passed invalid)))
         (format T 
-            "~%Results of test-set ~a~%~\t~\tPASSED: ~a~\t~\tFAILED~a~\t~\tINVALID~a~%~\t~\tTOTAL~a~%~%"
+            "~%Results of test-set: ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a~%~%"
             name passed failed invalid total)
         result-hash-table))
 
@@ -93,6 +93,44 @@ Helper functions to execute tests as a set and print out the set result
 (defun test-set (name &rest tests)
     (let ((results (test-set-execute tests (make-hash-table))))
         (show-test-set-result name results)))
+
+#|
+Helper functions to execute test-sets as part of a test-suite
+ |#
+
+ (defun show-test-suite-result (result-hash-table) 
+    (let* ((passed (gethash :pass result-hash-table 0))
+            (failed (gethash :fail result-hash-table 0))
+            (invalid (gethash :invalid result-hash-table 0))
+            (total (+ failed passed invalid))
+            (sets (gethash :sets result-hash-table 0))
+            (all-passed? (eq (+ failed invalid) 0))
+            (result-str
+                (format nil
+                    "~%FINAL RESULT OF ~a TEST-SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a~%~%"
+                    sets passed failed invalid total)))
+        (format T (if all-passed? (green result-str) (red result-str)))
+        all-passed?))
+
+ (defun test-suite-execute (test-sets result-acc)
+    (if (eq (list-length test-sets) 0) 
+        result-acc
+        (let* ((set (car test-sets))
+                (set-pass (gethash :pass set 0))
+                (set-fail (gethash :fail set 0))
+                (set-invalid (gethash :invalid set 0))
+                (suite-pass (gethash :pass result-acc 0))
+                (suite-fail (gethash :fail result-acc 0))
+                (suite-invalid (gethash :invalid result-acc 0)))
+            (progn 
+                (setf (gethash :pass result-acc) (+ suite-pass set-pass))
+                (setf (gethash :fail result-acc) (+ suite-fail set-fail))
+                (setf (gethash :invalid result-acc) (+ suite-invalid set-invalid))
+                (incf (gethash :sets result-acc 0))
+                (test-suite-execute (cdr test-sets) result-acc)))))
+
+ (defun test-suite (&rest test-sets) 
+    (show-test-suite-result (test-suite-execute test-sets (make-hash-table))))
 
 #|
 Basic comparison functions with and without validity check
