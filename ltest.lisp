@@ -1,8 +1,30 @@
 (defpackage :ltest
     (:use :cl)
-    (:export :compare-v :compare :compare-any-v :compare-any :compare-all-v :compare-all :compare-none-v :compare-none
-        :assert-any-v
-        :test))
+    (:export :compare-v :compare :compare-not-v :compare-not :compare-any-v 
+            :compare-any :compare-all-v :compare-all :compare-none-v :compare-none
+            :assert-is-v :assert-is :assert-not-v :assert-not :assert-any-v 
+            :assert-any :assert-all-v :assert-all :assert-none-v :assert-none
+            :assert-=-v :assert-= :assert-/=-v :assert-/= :assert->-v :assert-> 
+            :assert->=-v :assert->= :assert-<-v :assert-< :assert-<=-v :assert-<=
+            :assert-eq-v :assert-eq :assert-not-eq-v :assert-not-eq
+            :assert-eql-v :assert-eql :assert-not-eql-v :assert-not-eql
+            :assert-equal-v :assert-equal :assert-not-equal-v :assert-not-equal
+            :assert-equalp-v :assert-equalp :assert-not-equalp-v :assert-not-equalp
+            :assert-string=-v :assert-string= :assert-string/=-v :assert-string/=
+            :assert-string>-v :assert-string> :assert-string>=-v :assert-string>=
+            :assert-string<-v :assert-string< :assert-string<=-v :assert-string<=
+            :assert-string-equal-v :assert-string-equal :assert-string-not-equal-v 
+            :assert-string-not-equal :assert-string-greaterp-v :assert-string-greaterp 
+            :assert-string-greaterorequalp-v :ssert-string-greaterorequalp
+            :assert-string-lessp-v :assert-string-lessp :assert-string-lessorequalp-v 
+            :assert-string-lessorequalp
+            :assert-char=-v :assert-char= :assert-char/=-v :assert-char/=
+            :assert-char>-v :assert-char> :assert-char>=-v :assert-char>=
+            :assert-char<-v :assert-char< :assert-char<=-v :assert-char<=
+            :assert-char-equal-v :assert-char-equal :assert-char-not-equal-v 
+            :assert-char-not-equal :assert-char-greaterp-v :assert-char-greaterp 
+            :assert-char-greaterorequalp-v :ssert-char-greaterorequalp :assert-char-lessp-v 
+            :assert-char-lessp :assert-char-lessorequalp-v :assert-char-lessorequalp))
 
 (in-package :ltest)
 
