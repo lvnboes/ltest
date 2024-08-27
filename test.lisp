@@ -125,5 +125,4 @@
             (ltest:assert-not-equalp-v 1 "abc" "eq-op-test-81")
             (ltest:assert-not-equalp 1 2 "eq-op-test-82")
             (ltest:assert-not-equalp 1 1 "eq-op-test-83")
-            (ltest:assert-not-equalp 1 "abc" "eq-op-test-84"))
-    ))
+            (ltest:assert-not-equalp 1 "abc" "eq-op-test-84"))))
