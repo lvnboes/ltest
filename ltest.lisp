@@ -56,17 +56,17 @@ Helper functions to print out test results
 
 (defun green (str) 
     (if (not *output-file*)
-        (format nil "~c[32m~a~c[0m" #\esc str #\esc)
+        (format nil "~c[92m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun yellow (str) 
     (if (not *output-file*)
-        (format nil "~c[33m~a~c[0m" #\esc str #\esc)
+        (format nil "~c[93m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun red (str) 
     (if (not *output-file*)
-        (format nil "~c[31m~a~c[0m" #\esc str #\esc)
+        (format nil "~c[91m~a~c[0m" #\esc str #\esc)
         str))
 
 (defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
