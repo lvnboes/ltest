@@ -69,7 +69,7 @@ Helper functions to print out test results
         (format nil "~c[31m~a~c[0m" #\esc str #\esc)
         str))
 
-(defun insert-padding (str1 str2 len pad-char)
+(defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
     (let* ((len1 (length str1))
             (len2 (length str2))
             (len-padding (max (- len (+ len1 len2)) 0))
@@ -83,7 +83,7 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format T (green (insert-padding result-str " [PASS]" 120 #\.)))
+        (format T (green (insert-padding result-str " [PASS]")))
         :pass))
 
 (defun fail (f-name var1 var2 &key (predicates nil) (test-name nil)) 
@@ -93,7 +93,7 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format T (red (insert-padding result-str " [FAIL]" 120 #\.)))
+        (format T (red (insert-padding result-str " [FAIL]")))
         :fail))
     
 
@@ -104,7 +104,7 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format T (yellow (insert-padding result-str " [INVALID]" 120 #\.)))
+        (format T (yellow (insert-padding result-str " [INVALID]")))
         :invalid))
 
 #|
