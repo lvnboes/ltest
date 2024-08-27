@@ -39,18 +39,18 @@ Helper functions to print out test results
 
 (defun red (str) (format nil "~c[31m~a~c[0m" #\esc str #\esc))
 
-(defun pass (f-name var1 var2 &optional (predicates nil pred-p) (test-name nil test-name-p)) 
-    (let ((pred-str (if pred-p (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name-p (format nil "~a | " test-name) "")))
+(defun pass (f-name var1 var2 &key (predicates nil) (test-name nil)) 
+    (let ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format nil "~a | " test-name) "")))
         (format T
             (green "~%~a~a |~a ~a ~a | ~a ~a => PASS...")
             test-name-str f-name pred-str
             (type-of var1) var1 (type-of var2) var2)
         :pass))
 
-(defun fail (f-name var1 var2 &optional (predicates nil pred-p) (test-name nil test-name-p)) 
-    (let ((pred-str (if pred-p (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name-p (format nil "~a | " test-name) "")))
+(defun fail (f-name var1 var2 &key (predicates nil) (test-name nil)) 
+    (let ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format nil "~a | " test-name) "")))
         (format T
             (red "~%~a~a |~a ~a ~a | ~a ~a => FAIL!!!")
             test-name-str f-name pred-str
@@ -58,9 +58,9 @@ Helper functions to print out test results
         :fail))
     
 
-(defun invalid (f-name var1 var2 &optional (predicates nil pred-p) (test-name nil test-name-p)) 
-    (let ((pred-str (if pred-p (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name-p (format nil "~a | " test-name) "")))
+(defun invalid (f-name var1 var2 &key (predicates nil) (test-name nil)) 
+    (let ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
+            (test-name-str (if test-name (format nil "~a | " test-name) "")))
         (format T
             (yellow "~%~a~a |~a ~a ~a | ~a ~a => INVALID???")
             test-name-str f-name pred-str
@@ -208,349 +208,349 @@ Test functions derived from the basic comparison functions
 
 (defun assert-is-v (value expected predicate &optional test-name)
     (funcall (compare-v value expected predicate) 
-        'assert-is-v value expected (list predicate) test-name))
+        'assert-is-v value expected :predicates (list predicate) :test-name test-name))
 
 (defun assert-is (value expected predicate &optional test-name)
     (funcall (compare value expected predicate) 
-        'assert-is value expected (list predicate) test-name))
+        'assert-is value expected :predicates (list predicate) :test-name test-name))
 
 (defun assert-not-v (value expected predicate &optional test-name)
     (funcall (compare-not-v value expected predicate) 
-        'assert-not-v value expected (list predicate) test-name))
+        'assert-not-v value expected :predicates (list predicate) :test-name test-name))
 
 (defun assert-not (value expected predicate &optional test-name)
     (funcall (compare-not value expected predicate) 
-        'assert-not value expected (list predicate) test-name))
+        'assert-not value expected :predicates (list predicate) :test-name test-name))
 
 (defun assert-any-v (value expected predicates &optional test-name)
     (funcall (compare-any-v value expected predicates) 
-        'assert-any-v value expected predicates test-name))
+        'assert-any-v value expected :predicates predicates :test-name test-name))
 
 (defun assert-any (value expected predicates &optional test-name)
     (funcall (compare-any value expected predicates) 
-        'assert-any value expected predicates test-name))
+        'assert-any value expected :predicates predicates :test-name test-name))
 
 (defun assert-all-v (value expected predicates &optional test-name)
     (funcall (compare-all-v value expected predicates) 
-        'assert-all-v value expected predicates test-name))
+        'assert-all-v value expected :predicates predicates :test-name test-name))
 
 (defun assert-all (value expected predicates &optional test-name)
     (funcall (compare-all value expected predicates) 
-        'assert-all value expected predicates test-name))
+        'assert-all value expected :predicates predicates :test-name test-name))
 
 (defun assert-none-v (value expected predicates &optional test-name)
     (funcall (compare-none-v value expected predicates) 
-        'assert-none-v value expected predicates test-name))
+        'assert-none-v value expected :predicates predicates :test-name test-name))
 
 (defun assert-none (value expected predicates &optional test-name)
     (funcall (compare-none value expected predicates) 
-        'assert-none value expected predicates test-name))
+        'assert-none value expected :predicates predicates :test-name test-name))
 
 ;; comparison of two values
 
 (defun assert-=-v (value expected &optional test-name)
     (funcall (compare-v value expected '=) 
-        'assert-=-v value expected test-name))
+        'assert-=-v value expected :test-name test-name))
 
 (defun assert-= (value expected &optional test-name)
     (funcall (compare value expected '=) 
-        'assert-= value expected test-name))
+        'assert-= value expected :test-name test-name))
 
 (defun assert-/=-v (value expected &optional test-name)
     (funcall (compare-v value expected '/=) 
-        'assert-/=-v value expected test-name))
+        'assert-/=-v value expected :test-name test-name))
 
 (defun assert-/= (value expected &optional test-name)
     (funcall (compare value expected '/=) 
-        'assert-/= value expected test-name))
+        'assert-/= value expected :test-name test-name))
 
 (defun assert->-v (value expected &optional test-name)
     (funcall (compare-v value expected '>) 
-        'assert->-v value expected test-name))
+        'assert->-v value expected :test-name test-name))
 
 (defun assert-> (value expected &optional test-name)
     (funcall (compare value expected '>) 
-        'assert-> value expected test-name))
+        'assert-> value expected :test-name test-name))
 
 (defun assert->=-v (value expected &optional test-name)
     (funcall (compare-v value expected '>=) 
-        'assert->=-v value expected test-name))
+        'assert->=-v value expected :test-name test-name))
 
 (defun assert->= (value expected &optional test-name)
     (funcall (compare value expected '>=) 
-        'assert->= value expected test-name))
+        'assert->= value expected :test-name test-name))
 
 (defun assert-<-v (value expected &optional test-name)
     (funcall (compare-v value expected '<) 
-        'assert-<-v value expected test-name))
+        'assert-<-v value expected :test-name test-name))
 
 (defun assert-< (value expected &optional test-name)
     (funcall (compare value expected '<) 
-        'assert-< value expected test-name))
+        'assert-< value expected :test-name test-name))
 
 (defun assert-<=-v (value expected &optional test-name)
     (funcall (compare-v value expected '<=) 
-        'assert-<=-v value expected test-name))
+        'assert-<=-v value expected :test-name test-name))
 
 (defun assert-<= (value expected &optional test-name)
     (funcall (compare value expected '<=) 
-        'assert-<= value expected test-name))
+        'assert-<= value expected :test-name test-name))
 
 (defun assert-eq-v (value expected &optional test-name)
     (funcall (compare-v value expected 'eq) 
-        'assert-eq-v value expected test-name))
+        'assert-eq-v value expected :test-name test-name))
 
 (defun assert-eq (value expected &optional test-name)
     (funcall (compare value expected 'eq) 
-        'assert-eq value expected test-name))
+        'assert-eq value expected :test-name test-name))
 
 (defun assert-not-eq-v (value expected &optional test-name)
     (funcall (compare-not-v value expected 'eq) 
-        'assert-not-eq-v value expected test-name))
+        'assert-not-eq-v value expected :test-name test-name))
 
 (defun assert-not-eq (value expected &optional test-name)
     (funcall (compare-not value expected 'eq) 
-        'assert-not-eq value expected test-name))
+        'assert-not-eq value expected :test-name test-name))
 
 (defun assert-eql-v (value expected &optional test-name)
     (funcall (compare-v value expected 'eql) 
-        'assert-eql-v value expected test-name))
+        'assert-eql-v value expected :test-name test-name))
 
 (defun assert-eql (value expected &optional test-name)
     (funcall (compare value expected 'eql) 
-        'assert-eql value expected test-name))
+        'assert-eql value expected :test-name test-name))
 
 (defun assert-not-eql-v (value expected &optional test-name)
     (funcall (compare-not-v value expected 'eql) 
-        'assert-not-eql-v value expected test-name))
+        'assert-not-eql-v value expected :test-name test-name))
 
 (defun assert-not-eql (value expected &optional test-name)
     (funcall (compare-not value expected 'eql) 
-        'assert-not-eql value expected test-name))
+        'assert-not-eql value expected :test-name test-name))
 
 (defun assert-equal-v (value expected &optional test-name)
     (funcall (compare-v value expected 'equal) 
-        'assert-equal-v value expected test-name))
+        'assert-equal-v value expected :test-name test-name))
 
 (defun assert-equal (value expected &optional test-name)
     (funcall (compare value expected 'equal) 
-        'assert-equal value expected test-name))
+        'assert-equal value expected :test-name test-name))
 
 (defun assert-not-equal-v (value expected &optional test-name)
     (funcall (compare-not-v value expected 'equal) 
-        'assert-not-equal-v value expected test-name))
+        'assert-not-equal-v value expected :test-name test-name))
 
 (defun assert-not-equal (value expected &optional test-name)
     (funcall (compare-not value expected 'equal) 
-        'assert-not-equal value expected test-name))
+        'assert-not-equal value expected :test-name test-name))
 
 (defun assert-equalp-v (value expected &optional test-name)
     (funcall (compare-v value expected 'equalp) 
-        'assert-equalp-v value expected test-name))
+        'assert-equalp-v value expected :test-name test-name))
 
 (defun assert-equalp (value expected &optional test-name)
     (funcall (compare value expected 'equalp) 
-        'assert-equalp value expected test-name))
+        'assert-equalp value expected :test-name test-name))
 
 (defun assert-not-equalp-v (value expected &optional test-name)
     (funcall (compare-not-v value expected 'equalp) 
-        'assert-not-equalp-v value expected test-name))
+        'assert-not-equalp-v value expected :test-name test-name))
 
 (defun assert-not-equalp (value expected &optional test-name)
     (funcall (compare-not value expected 'equalp) 
-        'assert-not-equalp value expected test-name))
+        'assert-not-equalp value expected :test-name test-name))
 
 ;; comparison of two strings
 
 (defun assert-string=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string=) 
-        'assert-string=-v value expected test-name))
+        'assert-string=-v value expected :test-name test-name))
 
 (defun assert-string= (value expected &optional test-name)
     (funcall (compare value expected 'string=) 
-        'assert-string= value expected test-name))
+        'assert-string= value expected :test-name test-name))
 
 (defun assert-string/=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string/=) 
-        'assert-string/=-v value expected test-name))
+        'assert-string/=-v value expected :test-name test-name))
 
 (defun assert-string/= (value expected &optional test-name)
     (funcall (compare value expected 'string/=) 
-        'assert-string/= value expected test-name))
+        'assert-string/= value expected :test-name test-name))
 
 (defun assert-string>-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string>) 
-        'assert-string>-v value expected test-name))
+        'assert-string>-v value expected :test-name test-name))
 
 (defun assert-string> (value expected &optional test-name)
     (funcall (compare value expected 'string>) 
-        'assert-string> value expected test-name))
+        'assert-string> value expected :test-name test-name))
 
 (defun assert-string>=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string>=) 
-        'assert-string>=-v value expected test-name))
+        'assert-string>=-v value expected :test-name test-name))
 
 (defun assert-string>= (value expected &optional test-name)
     (funcall (compare value expected 'string>=) 
-        'assert-string>= value expected test-name))
+        'assert-string>= value expected :test-name test-name))
 
 (defun assert-string<-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string<) 
-        'assert-string<-v value expected test-name))
+        'assert-string<-v value expected :test-name test-name))
 
 (defun assert-string< (value expected &optional test-name)
     (funcall (compare value expected 'string<) 
-        'assert-string< value expected test-name))
+        'assert-string< value expected :test-name test-name))
 
 (defun assert-string<=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string<=) 
-        'assert-string<=-v value expected test-name))
+        'assert-string<=-v value expected :test-name test-name))
 
 (defun assert-string<= (value expected &optional test-name)
     (funcall (compare value expected 'string<=) 
-        'assert-string<= value expected test-name))
+        'assert-string<= value expected :test-name test-name))
 
 (defun assert-string-equal-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string-equal) 
-        'assert-string-equal-v value expected test-name))
+        'assert-string-equal-v value expected :test-name test-name))
 
 (defun assert-string-equal (value expected &optional test-name)
     (funcall (compare value expected 'string-equal) 
-        'assert-string-equal value expected test-name))
+        'assert-string-equal value expected :test-name test-name))
 
 (defun assert-string-not-equal-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string-not-equal) 
-        'assert-string-not-equal-v value expected test-name))
+        'assert-string-not-equal-v value expected :test-name test-name))
 
 (defun assert-string-not-equal (value expected &optional test-name)
     (funcall (compare value expected 'string-not-equal) 
-        'assert-string-not-equal value expected test-name))
+        'assert-string-not-equal value expected :test-name test-name))
 
 (defun assert-string-greaterp-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string-greaterp) 
-        'assert-string-greaterp-v value expected test-name))
+        'assert-string-greaterp-v value expected :test-name test-name))
 
 (defun assert-string-greaterp (value expected &optional test-name)
     (funcall (compare value expected 'string-greaterp) 
-        'assert-string-greaterp value expected test-name))
+        'assert-string-greaterp value expected :test-name test-name))
 
 (defun assert-string-greaterorequalp-v (value expected &optional test-name)
     (funcall (compare-any-v value expected (list 'string-equal 'string-greaterp)) 
-        'assert-string-greaterorequalp-v value expected test-name))
+        'assert-string-greaterorequalp-v value expected :test-name test-name))
 
 (defun assert-string-greaterorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'string-equal 'string-greaterp))
-        'assert-string-greaterorequalp value expected test-name))
+        'assert-string-greaterorequalp value expected :test-name test-name))
 
 (defun assert-string-lessp-v (value expected &optional test-name)
     (funcall (compare-v value expected 'string-lessp) 
-        'assert-string-lessp-v value expected test-name))
+        'assert-string-lessp-v value expected :test-name test-name))
 
 (defun assert-string-lessp (value expected &optional test-name)
     (funcall (compare value expected 'string-lessp) 
-        'assert-string-lessp value expected test-name))
+        'assert-string-lessp value expected :test-name test-name))
 
 (defun assert-string-lessorequalp-v (value expected &optional test-name)
     (funcall (compare-any-v value expected (list 'string-equal 'string-lessp)) 
-        'assert-string-lessorequalp-v value expected test-name))
+        'assert-string-lessorequalp-v value expected :test-name test-name))
 
 (defun assert-string-lessorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'string-equal 'string-lessp)) 
-        'assert-string-lessorequalp value expected test-name))
+        'assert-string-lessorequalp value expected :test-name test-name))
 
 ;;comparison of two chars
 
 (defun assert-char=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char=) 
-        'assert-char=-v value expected test-name))
+        'assert-char=-v value expected :test-name test-name))
 
 (defun assert-char= (value expected &optional test-name)
     (funcall (compare value expected 'char=) 
-        'assert-char= value expected test-name))
+        'assert-char= value expected :test-name test-name))
 
 (defun assert-char/=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char/=) 
-        'assert-char/=-v value expected test-name))
+        'assert-char/=-v value expected :test-name test-name))
 (defun assert-char/= (value expected &optional test-name)
     (funcall (compare value expected 'char/=) 
-        'assert-char/= value expected test-name))
+        'assert-char/= value expected :test-name test-name))
 
 (defun assert-char>-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char>) 
-        'assert-char>-v value expected test-name))
+        'assert-char>-v value expected :test-name test-name))
 
 (defun assert-char> (value expected &optional test-name)
     (funcall (compare value expected 'char>) 
-        'assert-char> value expected test-name))
+        'assert-char> value expected :test-name test-name))
 
 (defun assert-char>=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char>=) 
-        'assert-char>=-v value expected test-name))
+        'assert-char>=-v value expected :test-name test-name))
 
 (defun assert-char>= (value expected &optional test-name)
     (funcall (compare value expected 'char>=) 
-        'assert-char>= value expected test-name))
+        'assert-char>= value expected :test-name test-name))
 
 (defun assert-char<-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char<) 
-        'assert-char<-v value expected test-name))
+        'assert-char<-v value expected :test-name test-name))
 
 (defun assert-char< (value expected &optional test-name)
     (funcall (compare value expected 'char<) 
-        'assert-char< value expected test-name))
+        'assert-char< value expected :test-name test-name))
 
 (defun assert-char<=-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char<=) 
-        'assert-char<=-v value expected test-name))
+        'assert-char<=-v value expected :test-name test-name))
 
 (defun assert-char<= (value expected &optional test-name)
     (funcall (compare value expected 'char<=) 
-        'assert-char<= value expected test-name))
+        'assert-char<= value expected :test-name test-name))
 
 (defun assert-char-equal-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char-equal) 
-        'assert-char-equal-v value expected test-name))
+        'assert-char-equal-v value expected :test-name test-name))
 
 (defun assert-char-equal (value expected &optional test-name)
     (funcall (compare value expected 'char-equal) 
-        'assert-char-equal value expected test-name))
+        'assert-char-equal value expected :test-name test-name))
 
 (defun assert-char-not-equal-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char-not-equal) 
-        'assert-char-not-equal-v value expected test-name))
+        'assert-char-not-equal-v value expected :test-name test-name))
 
 (defun assert-char-not-equal (value expected &optional test-name)
     (funcall (compare value expected 'char-not-equal) 
-        'assert-char-not-equal value expected test-name))
+        'assert-char-not-equal value expected :test-name test-name))
 
 (defun assert-char-greaterp-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char-greaterp) 
-        'assert-char-greaterp-v value expected test-name))
+        'assert-char-greaterp-v value expected :test-name test-name))
 
 (defun assert-char-greaterp (value expected &optional test-name)
     (funcall (compare value expected 'char-greaterp) 
-        'assert-char-greaterp value expected test-name))
+        'assert-char-greaterp value expected :test-name test-name))
 
 (defun assert-char-greaterorequalp-v (value expected &optional test-name)
     (funcall (compare-any-v value expected (list 'char-equal 'char-greaterp)) 
-        'assert-char-greaterorequalp-v value expected test-name))
+        'assert-char-greaterorequalp-v value expected :test-name test-name))
 
 (defun assert-char-greaterorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'char-equal 'char-greaterp)) 
-        'assert-char-greaterorequalp value expected test-name))
+        'assert-char-greaterorequalp value expected :test-name test-name))
 
 (defun assert-char-lessp-v (value expected &optional test-name)
     (funcall (compare-v value expected 'char-lessp) 
-        'assert-char-lessp-v value expected test-name))
+        'assert-char-lessp-v value expected :test-name test-name))
 
 (defun assert-char-lessp (value expected &optional test-name)
     (funcall (compare value expected 'char-lessp) 
-        'assert-char-lessp value expected test-name))
+        'assert-char-lessp value expected :test-name test-name))
 
 (defun assert-char-lessorequalp-v (value expected &optional test-name)
     (funcall (compare-any-v value expected (list 'char-equal 'char-lessp))
-        'assert-char-lessorequalp-v value expected test-name))
+        'assert-char-lessorequalp-v value expected :test-name test-name))
 
 (defun assert-char-lessorequalp (value expected &optional test-name)
     (funcall (compare-any value expected (list 'char-equal 'char-lessp)) 
-        'assert-char-lessorequalp value expected test-name))
+        'assert-char-lessorequalp value expected :test-name test-name))
