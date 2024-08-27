@@ -125,7 +125,7 @@ Helper functions to print out test results
                 "~%~a~a |~a ~a ~a | ~a ~a "
                 test-name-str f-name pred-str
                 (type-of var1) var1 (type-of var2) var2)))
-        (format t (yellow (insert-padding result-str " [INVALID]")))
+        (format t (yellow (insert-padding result-str " [INVD]")))
         :invalid))
 
 #|
