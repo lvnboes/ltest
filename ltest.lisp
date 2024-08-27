@@ -77,7 +77,7 @@ Helper functions to execute tests as a set and print out the set result
             (invalid (gethash :invalid result-hash-table 0))
             (total (+ failed passed invalid)))
         (format T 
-            "~%Results of test-set: ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a~%~%"
+            "~%Results of test-set: ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
             name passed failed invalid total)
         result-hash-table))
 
@@ -105,7 +105,7 @@ Helper functions to execute test-sets as part of a test-suite
             (all-passed? (eq (+ failed invalid) 0))
             (result-str
                 (format nil
-                    "~%FINAL RESULT OF ~a TEST-SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a~%~%"
+                    "~%FINAL RESULT OF ~a TEST-SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
                     sets passed failed invalid total)))
         (format T (if all-passed? (green result-str) (red result-str)))
         all-passed?))
