@@ -25,9 +25,7 @@
         :assert-char-equal-v :assert-char-equal :assert-char-not-equal-v 
         :assert-char-not-equal :assert-char-greaterp-v :assert-char-greaterp 
         :assert-char-greaterorequalp-v :ssert-char-greaterorequalp :assert-char-lessp-v 
-        :assert-char-lessp :assert-char-lessorequalp-v :assert-char-lessorequalp
-        
-        :green :yellow :red))
+        :assert-char-lessp :assert-char-lessorequalp-v :assert-char-lessorequalp))
 
 (in-package :ltest)
 
