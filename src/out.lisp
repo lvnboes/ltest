@@ -11,7 +11,7 @@
             (result-len (length result))
             (padding-len (- width name-len result-len 2))
             (padding (make-string padding-len :initial-element pad-char)))
-        (format nil "~%~a ~a ~a" test-name padding result)))
+        (format nil "~a ~a ~a~%" test-name padding result)))
 
 (defun test-result-assertions (assertions &optional (assertion-strings '()))
     (if (null assertions) 
@@ -19,19 +19,19 @@
         (progn
             (if (not (eq (getf (car assertions) :result) :pass))
                 (let* ((assertion (car assertions))
-                        (overview (format nil "~%ASSERTION ~a WITH CHECK ~a AND PRED ~a"
+                        (overview (format nil "ASSERTION ~a WITH CHECK ~a AND PRED ~a~%"
                             (getf assertion :result)
                             (getf assertion :check)
                             (getf assertion :pred)))
                         (exp (getf assertion :exp))
-                        (expected (format nil "~%    Expected ~a of type ~a" 
+                        (expected (format nil "    Expected ~a of type ~a~%" 
                             exp (type-of exp)))
                         (val (getf assertion :val))
-                        (got-val (format nil "~%    Got value ~a of type ~a"
+                        (got-val (format nil "    Got value ~a of type ~a~%"
                             val (type-of val)))
                         (err (getf assertion :error))
                         (error (if err
-                            (format nil "~%~a" err)
+                            (format nil "~a~%" err)
                             "")))
                     (push (format nil "~a~a~a~a" overview expected got-val error)
                         assertion-strings)))
@@ -49,7 +49,7 @@
                 (length invalid-str)))
             (padding-len (floor (/ total-padding 3)))
             (padding (make-string padding-len :initial-element pad-char)))
-        (format nil "~%~a~a~a~a~a~a~a"
+        (format nil "~a~a~a~a~a~a~a~%"
             total-str padding 
             passed-str padding 
             failed-str padding 
@@ -79,6 +79,6 @@
                     (gethash :invalid result-table)) 
                 ""))
             (test-result-message 
-                (format nil "~a~a~a~%~%" result-prefix details result-suffix)))
+                (format nil "~a~a~a" result-prefix details result-suffix)))
         (format t (funcall print-colour test-result-message))
     ))
