@@ -108,7 +108,7 @@ Format and output test set and test- uite results
             (colour:bright-green 
                 result-str 
                 *output-file*) 
-            (colour:bright-blue 
+            (colour:bright-cyan 
                 result-str 
                 *output-file*)))
         all-passed?))
