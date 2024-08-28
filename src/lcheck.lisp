@@ -17,10 +17,10 @@ Simple checks
  |#
 
 (defun check-true (pred val exp) 
-    (pred val exp))
+    (funcall pred val exp))
 
 (defun check-false (pred val exp)
-    (not (pred val exp)))
+    (not (funcall pred val exp)))
 
 #|
 Iterative checks
