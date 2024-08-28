@@ -103,7 +103,7 @@ Format and output test set and test- uite results
             (result-str
                 (format nil
                     "~%~a~%~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
-                    (insert-padding "" "" :pad-char #\-) sets passed failed invalid total)))
+                    (insert-padding "" " " :pad-char #\-) sets passed failed invalid total)))
         (format t (if all-passed? 
             (colour:bright-green 
                 result-str 
