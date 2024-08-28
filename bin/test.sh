@@ -6,5 +6,3 @@
 (load "./src/lassert.lisp")
 (load "./src/out.lisp")
 (load "./src/ltest.lisp")
-(load "./test/test.lisp")
-(test:test)

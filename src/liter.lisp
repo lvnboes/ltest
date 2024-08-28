@@ -1,4 +1,4 @@
-(defpackage :inter
+(defpackage :liter
     (:use :cl)
     (:export :all-val :no-val :some-val :some-not-val
         :all-pred :no-pred :some-pred :some-not-pred

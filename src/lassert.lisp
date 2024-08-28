@@ -13,14 +13,14 @@
         (if (funcall check pred val exp)
             (list 
                 'pass 
-                (list: :check check :pred pred :val val :exp exp :error nil))
+                (list :check check :pred pred :val val :exp exp :error nil))
             (list 
                 'fail 
-                (list: :check check :pred pred :val val :exp exp :error nil)))
+                (list :check check :pred pred :val val :exp exp :error nil)))
         (error (e) 
             (list 
                 'invalid 
-                (list: :check check :pred pred :val val :exp exp :error e)))))
+                (list :check check :pred pred :val val :exp exp :error e)))))
 
 (defun check-assertions (assertions result) 
     (if (null assertions)
