@@ -1,8 +1,8 @@
-(defpackage :lassert
-    (:use :cl :lcheck)
+(defpackage :ltest
+    (:use :cl :lcheck :out)
     (:export :assertion :test))
 
-(in-package :lassert)
+(in-package :ltest)
 
 (defun determine-default-check ())
 
@@ -21,17 +21,20 @@
 
 (defun to-result-table (assertion-results) 
     (let ((result-table (make-hash-table)))
+        (setf (gethash :pass result-table) 0)
+        (setf (gethash :fail result-table) 0)
+        (setf (gethash :invalid result-table) 0)
         (dolist (assertion-result assertion-results)
             (incf (gethash (getf assertion-result :result) result-table 0)))
+        (setf (gethash :result result-table) 
+            (cond ((> (gethash :fail result-table) 0) :fail)
+                ((> (gethash :invalid result-table) 0) :invalid)
+                (t :pass)))
+        (setf (gethash :assertions result-table) 
+            assertion-results)
         result-table))
 
-(defun test (&key assertions)
-    (let* ((result-table (to-result-table assertions))
-            (passed-assertions (gethash :pass result-table))
-            (failed-assertions (gethash :fail result-table))
-            (invalid-assertions (gethash :invalid result-table))
-            (result (cond 
-                ((> failed-assertions 0) :fail)
-                ((> invalid-assertions 0) :invalid)
-                ((> passed-assertions 0) :pass))))
-    (format nil "~a~%~a~%~a~%~a~%~%~a" result passed-assertions failed-assertions invalid-assertions assertions)))
+(defun test (&key name assertions)
+    (let* ((result-table (to-result-table assertions)))
+        (setf (gethash :name result-table) name)
+        (out:test-result result-table)))
