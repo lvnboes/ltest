@@ -20,9 +20,21 @@
 
         :compare-all-v 
         :compare-all 
+        :compare-all-not-v 
+        :compare-all-not
+        :compare-all-t-v
+        :compare-all-t
+        :compare-all-nil-v
+        :compare-all-nil
 
         :compare-none-v 
         :compare-none
+        :compare-none-not-v
+        :compare-none-not
+        :compare-none-t-v
+        :compare-none-t
+        :compare-none-nil-v
+        :compare-none-nil
 
         :assert-is-v :assert-is :assert-not-v :assert-not :assert-any-v 
         :assert-any :assert-all-v :assert-all :assert-none-v :assert-none
@@ -306,56 +318,64 @@ Basic comparison functions with and without validity check
 (defun compare-any-not-v (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((funcall (car p-list) val1 val2) (compare-any-not-v val1 val2 (cdr p-list)))
+            ((funcall (car p-list) val1 val2) 
+                (compare-any-not-v val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:invalid)))
 
 (defun compare-each-any-not-v (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-each val1 val2 (car p-list)) (compare-each-any-not-v val1 val2 (cdr p-list)))
+            ((do-each val1 val2 (car p-list)) 
+                (compare-each-any-not-v val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:invalid)))
 
 (defun compare-some-any-not-v (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-some val1 val2 (car p-list)) (compare-some-any-not-v val1 val2 (cdr p-list)))
+            ((do-some val1 val2 (car p-list)) 
+                (compare-some-any-not-v val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:invalid)))
 
 (defun compare-no-any-not-v (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-no val1 val2 (car p-list)) (compare-no-any-not-v val1 val2 (cdr p-list)))
+            ((do-no val1 val2 (car p-list)) 
+                (compare-no-any-not-v val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:invalid)))
 
 (defun compare-any-not (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((funcall (car p-list) val1 val2) (compare-any-not val1 val2 (cdr p-list)))
+            ((funcall (car p-list) val1 val2) 
+                (compare-any-not val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:fail)))
 
 (defun compare-each-any-not (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-each val1 val2 (car p-list)) (compare-each-any-not val1 val2 (cdr p-list)))
+            ((do-each val1 val2 (car p-list)) 
+                (compare-each-any-not val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:fail)))
 
 (defun compare-some-any-not (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-some val1 val2 (car p-list)) (compare-some-any-not val1 val2 (cdr p-list)))
+            ((do-some val1 val2 (car p-list)) 
+                (compare-some-any-not val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:fail)))
 
 (defun compare-no-any-not (val1 val2 p-list)
     (handler-case
         (cond ((null p-list) 'res-out:fail)
-            ((do-no val1 val2 (car p-list)) (compare-no-any-not val1 val2 (cdr p-list)))
+            ((do-no val1 val2 (car p-list)) 
+                (compare-no-any-not val1 val2 (cdr p-list)))
             (t 'res-out:pass))
         (error () 'res-out:fail)))
 
@@ -423,6 +443,20 @@ Basic comparison functions with and without validity check
             (t 'res-out:fail))
         (error () 'res-out:fail)))
 
+(defun compare-all-not-v (val1 val2 p-list)
+    (handler-case
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2) 'res-out:fail)
+            (t (compare-all-v val1 val2 (cdr p-list))))
+        (error () 'res-out:invalid)))
+
+(defun compare-all-not (val1 val2 p-list)
+    (handler-case
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2)  'res-out:fail)
+            (t (compare-all val1 val2 (cdr p-list))))
+        (error () 'res-out:fail)))
+
 (defun compare-all-t-v (val pred)
     (compare-all-v val t pred))
 
@@ -447,7 +481,23 @@ Basic comparison functions with and without validity check
         (cond ((null p-list) 'res-out:pass)
             ((funcall (car p-list) val1 val2) 'res-out:fail)
             (t (compare-none val1 val2 (cdr p-list))))
-        (error () (compare-none val1 val2 (cdr p-list)))))
+        (error () 'res-out:invalid)))
+
+(defun compare-none-not-v (val1 val2 p-list)
+    (handler-case
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2) 
+                (compare-none-v val1 val2 (cdr p-list)))
+            (t 'res-out:fail))
+        (error () 'res-out:invalid)))
+
+(defun compare-none-not (val1 val2 p-list)
+    (handler-case
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2) 
+                (compare-none-v val1 val2 (cdr p-list)))
+            (t 'res-out:fail))
+        (error () 'res-out:fail)))
 
 (defun compare-none-t-v (val pred)
     (compare-none-v val t pred))
