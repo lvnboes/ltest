@@ -1,5 +1,5 @@
 (defpackage :ltest
-    (:use :cl :colour)
+    (:use :cl :colour :res-out)
     (:export :test-set :test-suite :to-output
         :compare-v :compare-each-v :compare-some-v :compare-no-v
         :compare :compare-each :compare-some :compare-no
@@ -50,88 +50,9 @@
 
 (in-package :ltest)
 
-(defparameter *output-file* nil)
-
-#|
-Wrapper to optonally write to a specific output file
- |#
-
-(defun to-output (&key test-suite output-file)
-    (let ((result nil))
-        (if output-file
-            (progn
-                (setf *output-file* output-file)
-                (with-open-file (stream *output-file*
-                    :direction :output
-                    :if-exists :overwrite
-                    :if-does-not-exist :create)
-                    (let ((*standard-output* stream))
-                        (setf result (eval test-suite)))))
-        (setf result (eval test-suite)))
-        result
-    ))
-
-#|
-Helper functions to print out test results
- |#
-
-(defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
-    (let* ((len1 (length str1))
-            (len2 (length str2))
-            (len-padding (max (- len (+ len1 len2)) 0))
-            (padding-str (make-string len-padding :element-type 'character :initial-element pad-char)))
-        (format nil "~a~a~a" str1 padding-str str2)))
- 
-(defun pass (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
-                "~%~a~a |~a ~a ~a | ~a ~a "
-                test-name-str f-name pred-str
-                (type-of var1) var1 (type-of var2) var2)))
-        (format t (colour:bright-green 
-            (insert-padding result-str " [PASS]") 
-            *output-file*))
-        :pass))
-
-(defun fail (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
-                "~%~a~a |~a ~a ~a | ~a ~a "
-                test-name-str f-name pred-str
-                (type-of var1) var1 (type-of var2) var2)))
-        (format t (colour:bright-red 
-            (insert-padding result-str " [FAIL]")
-            *output-file*))
-        :fail))
-    
-
-(defun invalid (f-name var1 var2 &key (predicates nil) (test-name nil)) 
-    (let* ((pred-str (if predicates (format nil " ~{~a~^ ~} |" predicates) ""))
-            (test-name-str (if test-name (format nil "~a | " test-name) ""))
-            (result-str (format nil
-                "~%~a~a |~a ~a ~a | ~a ~a "
-                test-name-str f-name pred-str
-                (type-of var1) var1 (type-of var2) var2)))
-        (format t (colour:bright-yellow 
-            (insert-padding result-str " [INVD]")
-            *output-file*))
-        :invalid))
-
 #|
 Helper functions to execute tests as a set and print out the set result
  |#
-
-(defun show-test-set-result (name result-hash-table)
-    (let* ((passed (gethash :pass result-hash-table 0))
-            (failed (gethash :fail result-hash-table 0))
-            (invalid (gethash :invalid result-hash-table 0))
-            (total (+ failed passed invalid)))
-        (format t 
-            "~%Results of test set: ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
-            name passed failed invalid total)
-        result-hash-table))
 
 (defun test-set-execute (tests result-acc)
     (if (null tests)
@@ -142,31 +63,11 @@ Helper functions to execute tests as a set and print out the set result
 
 (defun test-set (&key (name "Unnamed test set") (tests '()))
     (let ((results (test-set-execute tests (make-hash-table))))
-        (show-test-set-result name results)))
+        (res-out:show-test-set-result name results)))
 
 #|
 Helper functions to execute test-sets as part of a test-suite
  |#
-
- (defun show-test-suite-result (result-hash-table) 
-    (let* ((passed (gethash :pass result-hash-table 0))
-            (failed (gethash :fail result-hash-table 0))
-            (invalid (gethash :invalid result-hash-table 0))
-            (total (+ failed passed invalid))
-            (sets (gethash :sets result-hash-table 0))
-            (all-passed? (eq (+ failed invalid) 0))
-            (result-str
-                (format nil
-                    "~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
-                    sets passed failed invalid total)))
-        (format t (if all-passed? 
-            (colour:bright-green 
-                result-str 
-                *output-file*) 
-            (colour:bright-red 
-                result-str 
-                *output-file*)))
-        all-passed?))
 
  (defun test-suite-execute (test-sets result-acc)
     (if (null test-sets) 
@@ -186,7 +87,7 @@ Helper functions to execute test-sets as part of a test-suite
                 (test-suite-execute (cdr test-sets) result-acc)))))
 
  (defun test-suite (&key test-sets) 
-    (show-test-suite-result (test-suite-execute test-sets (make-hash-table))))
+    (res-out:show-test-suite-result (test-suite-execute test-sets (make-hash-table))))
 
 #|
 Basic comparison functions with and without validity check
@@ -220,83 +121,83 @@ Basic comparison functions with and without validity check
 
 (defun compare-v (val1 val2 pred)
     (handler-case
-        (if (funcall pred val1 val2) 'pass 'fail)
-        (error () 'invalid)))
+        (if (funcall pred val1 val2) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-each-v (var-list val2 pred)
     (handler-case
-        (if (do-each var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-each var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-some-v (var-list val2 pred)
     (handler-case
-        (if (do-some var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-some var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-no-v (var-list val2 pred)
     (handler-case
-        (if (do-no var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-no var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare (val1 val2 pred)
     (handler-case
-        (if (funcall pred val1 val2) 'pass 'fail)
-        (error () 'fail)))
+        (if (funcall pred val1 val2) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-each (var-list val2 pred)
     (handler-case
-        (if (do-each var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-each var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-some (var-list val2 pred)
     (handler-case
-        (if (do-some var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-some var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-no (var-list val2 pred)
     (handler-case
-        (if (do-no var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-no var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-not-v (val1 val2 pred)
     (handler-case
-        (if (funcall pred val1 val2) 'fail 'pass)
-        (error () 'invalid)))
+        (if (funcall pred val1 val2) 'res-out:fail 'res-out:pass)
+        (error () 'res-out:invalid)))
 
 (defun compare-each-not-v (var-list val2 pred)
     (handler-case
-        (if (do-no var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-no var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-some-not-v (var-list val2 pred)
     (handler-case
-        (if (do-some-not var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-some-not var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-no-not-v (var-list val2 pred)
     (handler-case
-        (if (do-each var-list val2 pred) 'pass 'fail)
-        (error () 'invalid)))
+        (if (do-each var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:invalid)))
 
 (defun compare-not (val1 val2 pred)
     (handler-case
-        (if (funcall pred val1 val2) 'fail 'pass)
-        (error () 'fail)))
+        (if (funcall pred val1 val2) 'res-out:fail 'res-out:pass)
+        (error () 'res-out:fail)))
 
 (defun compare-each-not (var-list val2 pred)
     (handler-case
-        (if (do-no var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-no var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-some-not (var-list val2 pred)
     (handler-case
-        (if (do-some-not var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-some-not var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-no-not (var-list val2 pred)
     (handler-case
-        (if (do-each var-list val2 pred) 'pass 'fail)
-        (error () 'fail)))
+        (if (do-each var-list val2 pred) 'res-out:pass 'res-out:fail)
+        (error () 'res-out:fail)))
 
 (defun compare-t-v (val pred)
     (compare-v val t pred))
@@ -348,115 +249,115 @@ Basic comparison functions with and without validity check
 
 (defun compare-any-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((funcall (car p-list) val1 val2) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((funcall (car p-list) val1 val2) 'res-out:pass)
             (t (compare-any-v val1 val2 (cdr p-list))))
-        (error () 'invalid)))
+        (error () 'res-out:invalid)))
 
 (defun compare-each-any-v (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-each var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-each var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-each-any-v var-list val2 (cdr p-list))))
-        (error () 'invalid)))
+        (error () 'res-out:invalid)))
 
 (defun compare-some-any-v (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-some var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-some var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-some-any-v var-list val2 (cdr p-list))))
-        (error () 'invalid)))
+        (error () 'res-out:invalid)))
 
 (defun compare-no-any-v (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-no var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-no var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-no-any-v var-list val2 (cdr p-list))))
-        (error () 'invalid)))
+        (error () 'res-out:invalid)))
 
 (defun compare-any (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((funcall (car p-list) val1 val2) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((funcall (car p-list) val1 val2) 'res-out:pass)
             (t (compare-any val1 val2 (cdr p-list))))
         (error () (compare-any val1 val2 (cdr p-list)))))
 
 (defun compare-each-any (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-each var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-each var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-each-any var-list val2 (cdr p-list))))
-        (error () 'fail)))
+        (error () 'res-out:fail)))
 
 (defun compare-some-any (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-some var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-some var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-some-any var-list val2 (cdr p-list))))
-        (error () 'fail)))
+        (error () 'res-out:fail)))
 
 (defun compare-no-any (var-list val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
-            ((do-no var-list val2 (car p-list)) 'pass)
+        (cond ((null p-list) 'res-out:fail)
+            ((do-no var-list val2 (car p-list)) 'res-out:pass)
             (t (compare-no-any var-list val2 (cdr p-list))))
-        (error () 'fail)))
+        (error () 'res-out:fail)))
 
 (defun compare-any-not-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((funcall (car p-list) val1 val2) (compare-any-not-v val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'invalid)))
+            (t 'res-out:pass))
+        (error () 'res-out:invalid)))
 
 (defun compare-each-any-not-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-each val1 val2 (car p-list)) (compare-each-any-not-v val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'invalid)))
+            (t 'res-out:pass))
+        (error () 'res-out:invalid)))
 
 (defun compare-some-any-not-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-some val1 val2 (car p-list)) (compare-some-any-not-v val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'invalid)))
+            (t 'res-out:pass))
+        (error () 'res-out:invalid)))
 
 (defun compare-no-any-not-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-no val1 val2 (car p-list)) (compare-no-any-not-v val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'invalid)))
+            (t 'res-out:pass))
+        (error () 'res-out:invalid)))
 
 (defun compare-any-not (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((funcall (car p-list) val1 val2) (compare-any-not val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'fail)))
+            (t 'res-out:pass))
+        (error () 'res-out:fail)))
 
 (defun compare-each-any-not (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-each val1 val2 (car p-list)) (compare-each-any-not val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'fail)))
+            (t 'res-out:pass))
+        (error () 'res-out:fail)))
 
 (defun compare-some-any-not (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-some val1 val2 (car p-list)) (compare-some-any-not val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'fail)))
+            (t 'res-out:pass))
+        (error () 'res-out:fail)))
 
 (defun compare-no-any-not (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'fail)
+        (cond ((null p-list) 'res-out:fail)
             ((do-no val1 val2 (car p-list)) (compare-no-any-not val1 val2 (cdr p-list)))
-            (t 'pass))
-        (error () 'fail)))
+            (t 'res-out:pass))
+        (error () 'res-out:fail)))
 
 (defun compare-any-t-v (val pred)
     (compare-any-v val t pred))
@@ -508,19 +409,19 @@ Basic comparison functions with and without validity check
 
 (defun compare-all-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'pass)
+        (cond ((null p-list) 'res-out:pass)
             ((funcall (car p-list) val1 val2) 
                 (compare-all-v val1 val2 (cdr p-list)))
-            (t 'fail))
-        (error () 'invalid)))
+            (t 'res-out:fail))
+        (error () 'res-out:invalid)))
 
 (defun compare-all (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'pass)
+        (cond ((null p-list) 'res-out:pass)
             ((funcall (car p-list) val1 val2) 
                 (compare-all val1 val2 (cdr p-list)))
-            (t 'fail))
-        (error () 'fail)))
+            (t 'res-out:fail))
+        (error () 'res-out:fail)))
 
 (defun compare-all-t-v (val pred)
     (compare-all-v val t pred))
@@ -536,15 +437,15 @@ Basic comparison functions with and without validity check
 
 (defun compare-none-v (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'pass)
-            ((funcall (car p-list) val1 val2) 'fail)
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2) 'res-out:fail)
             (t (compare-none-v val1 val2 (cdr p-list))))
-        (error () 'invalid)))
+        (error () 'res-out:invalid)))
 
 (defun compare-none (val1 val2 p-list)
     (handler-case
-        (cond ((null p-list) 'pass)
-            ((funcall (car p-list) val1 val2) 'fail)
+        (cond ((null p-list) 'res-out:pass)
+            ((funcall (car p-list) val1 val2) 'res-out:fail)
             (t (compare-none val1 val2 (cdr p-list))))
         (error () (compare-none val1 val2 (cdr p-list)))))
 
