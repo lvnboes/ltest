@@ -1,11 +1,11 @@
 (defpackage :test
-    (:use :cl :ltest)
+    (:use :cl :ltest :res-out)
     (:export :test))
 
 (in-package :test)
 
 (defun test ()
-    (ltest:to-output
+    (res-out:to-output
         :output-file nil
         :test-suite '(ltest:test-suite
             :test-sets (list
