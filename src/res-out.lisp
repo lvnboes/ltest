@@ -30,7 +30,7 @@ Wrapper to optonally write to a specific output file
 Formatting of result strings
  |#
 
-(defun insert-padding (str1 str2 &optional (len 100) (pad-char #\.))
+(defun insert-padding (str1 str2 &key (len 100) (pad-char #\.))
     (let* ((len1 (length str1))
             (len2 (length str2))
             (len-padding (max (- len (+ len1 len2)) 0))
@@ -102,13 +102,13 @@ Format and output test set and test- uite results
             (all-passed? (eq (+ failed invalid) 0))
             (result-str
                 (format nil
-                    "~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
-                    sets passed failed invalid total)))
+                    "~%~a~%~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
+                    (insert-padding "" "" :pad-char #\-) sets passed failed invalid total)))
         (format t (if all-passed? 
             (colour:bright-green 
                 result-str 
                 *output-file*) 
-            (colour:bright-red 
+            (colour:bright-blue 
                 result-str 
                 *output-file*)))
         all-passed?))

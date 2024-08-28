@@ -1,7 +1,7 @@
 (defpackage :colour
     (:use :cl)
     (:export :black :red :green :yellow :blue :magenta :cyan :white
-        :gray :bright-red :bright-green :bright-yellow :blright-blue
+        :gray :bright-red :bright-green :bright-yellow :bright-blue
         :bright-magenta :bright-cyan :bright-white))
 
 (in-package :colour)
