@@ -1,6 +1,6 @@
 (defpackage :ltest
     (:use :cl :colour :res-out)
-    (:export :test-set :test-suite :to-output
+    (:export :test-set :test-suite
         :compare-v :compare-each-v :compare-some-v :compare-no-v
         :compare :compare-each :compare-some :compare-no
         :compare-not-v :compare-each-not-v :compare-some-not-v :compare-no-not-v
