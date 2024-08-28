@@ -8,7 +8,7 @@
 
 (defun determine-default-pred ())
 
-(defun assertion (&key check pred val (exp t))
+(defun assertion (&key (check #'lcheck:check-true) (pred #'equalp) val (exp t))
     (handler-case
         (if (funcall check pred val exp)
             (list 
@@ -31,4 +31,4 @@
 
 (defun test (&key assertions (out t))
     (let* ((assertion-results (check-assertions assertions)))
-        (format t "TODO ~a" assertion-results)))
+        (format out "TODO ~a" assertion-results)))
