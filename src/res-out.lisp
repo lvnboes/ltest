@@ -89,7 +89,7 @@ Format and output test set and test- uite results
             (invalid (gethash :invalid result-hash-table 0))
             (total (+ failed passed invalid)))
         (format t 
-            "~%Results of test set - ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
+            "~%Results of test set - ~a~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%"
             name passed failed invalid total)
         result-hash-table))
 
@@ -102,7 +102,7 @@ Format and output test set and test- uite results
             (all-passed? (eq (+ failed invalid) 0))
             (result-str
                 (format nil
-                    "~%~a~%~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%~%"
+                    "~%~a~%~%FINAL RESULT OF ~a TEST SETS IN SUITE~%~\t~\tPASSED: ~a~\t~\tFAILED: ~a~\t~\tINVALID: ~a~%~\t~\tTOTAL: ~a TESTS~%"
                     (insert-padding "" " " :pad-char #\-) sets passed failed invalid total)))
         (format t (if all-passed? 
             (colour:bright-green 
