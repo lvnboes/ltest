@@ -24,14 +24,14 @@
         (dolist (assertion-result assertion-results)
             (incf (gethash (getf assertion-result :result) result-table 0)))
         result-table))
-    
+
 (defun test (&key assertions)
     (let* ((result-table (to-result-table assertions))
             (passed-assertions (gethash :pass result-table))
             (failed-assertions (gethash :fail result-table))
             (invalid-assertions (gethash :invalid result-table))
-            (test-result (cond 
+            (result (cond 
                 ((> failed-assertions 0) :fail)
                 ((> invalid-assertions 0) :invalid)
                 ((> passed-assertions 0) :pass))))
-    (format nil "~a~%~a~%~a~%~a~%" test-result passed-assertions failed-assertions invalid-assertions)))
+    (format nil "~a~%~a~%~a~%~a~%~%~a" result passed-assertions failed-assertions invalid-assertions assertions)))
