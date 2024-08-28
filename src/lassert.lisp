@@ -11,12 +11,24 @@
 (defun assertion (&key check pred val (exp t))
     (handler-case
         (if (funcall check pred val exp)
-            (list 'pass)
+            (list 
+                'pass 
+                (list: :check check :pred pred :val val :exp exp :error nil))
             (list 
                 'fail 
-                (format nil "failed: ~a | ~a | ~a | ~a")
-                    check pred val exp))
-        (error (e) (list 
-            'invalid 
-            (format nil "invalid: ~a | ~a | ~a | ~a | ~a"
-                check pred val exp e)))))
+                (list: :check check :pred pred :val val :exp exp :error nil)))
+        (error (e) 
+            (list 
+                'invalid 
+                (list: :check check :pred pred :val val :exp exp :error e)))))
+
+(defun check-assertions (assertions result) 
+    (if (null assertions)
+        (reverse result)
+        (check-assertions 
+            (cdr assertions) 
+            (cons (funcall (car assertions)) result))))
+
+(defun test (&key assertions (out t))
+    (let* ((assertion-results (check-assertions assertions)))
+        (format t "TODO ~a" assertion-results)))
