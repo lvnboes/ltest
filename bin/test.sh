@@ -1,4 +1,4 @@
-#!/usr/bin/sbcl --script
+#!/bin/bash sbcl --script
 
 (load "./src/colour.lisp")
 (load "./src/res-out.lisp")
