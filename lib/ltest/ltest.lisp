@@ -1,6 +1,7 @@
 (defpackage :ltest
     (:use :cl :iter :out)
     (:export 
+        :to-file
         :check-true :check-false
         :check-all-v :check-no-v :check-some-v :check-some-not-v
         :check-all-p :check-no-p :check-some-p :check-some-not-p
@@ -263,20 +264,23 @@ Test Suite
     "Process the test-set results into a result table, call on the output 
         function to display results and return the result table"
     (let ((result-table (to-test-suite-result-table test-sets name)))
-        (out:test-suite-out result-table use-output)
+        (out:test-suite-out result-table)
         (eq (gethash :result result-table) :pass)))
 
 #|
 Output to file instead of terminal
  |#
 
- (defun to-file (&key file-name ltests)
-    (let ((previous-output out:get-current-output-stream))
-        (with-open-file (stream file-name 
+(defun to-file (&key file-name ltest-fn)
+    "Closure to write the output of any test unit (suite, set or
+        individual test), defined as ltest-fn to a file with file-name
+        instead of standard output"
+    (let ((previous-output (out:get-current-output-stream)))
+        (with-open-file (new-output file-name 
             :direction :output
             :if-exists :supersede
             :if-does-not-exist :create)
-            (out:set-current-output-stream)
-            (defun ltests))
-        (out:set-current-output-stream previous-output)
-    ))
+            (out:set-current-output-stream new-output)
+            (let ((result (funcall ltest-fn)))
+                (out:set-current-output-stream previous-output)
+                result))))
