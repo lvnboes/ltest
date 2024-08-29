@@ -8,7 +8,8 @@
         :test-sets (list
             (test-colour:test-colours)
             (test-ltest:test-simple-checks)
-            (test-ltest:test-iterative-checks))))
+            (test-ltest:test-iterative-checks)
+            (test-ltest:test-double-iterative-checks))))
 
 (ltest-test-suite)
 

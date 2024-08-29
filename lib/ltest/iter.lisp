@@ -15,7 +15,7 @@ Herlper functions for iterating over predicates provided values
         all provided values in relation to the expected value"
     (cond ((null vals) t)
         ((funcall fn pred-or-preds (car vals) x)
-            (all-val pred-or-preds (cdr vals) x))
+            (all-val pred-or-preds (cdr vals) x fn))
         (t nil)))
 
 (defun no-val (pred-or-preds vals x &optional (fn #'funcall)) 
@@ -23,21 +23,21 @@ Herlper functions for iterating over predicates provided values
         none of the provided values in relation to the expected value"
     (cond ((null vals) t)
         ((funcall fn pred-or-preds (car vals) x) nil)
-        (t (no-val pred-or-preds (cdr vals) x))))
+        (t (no-val pred-or-preds (cdr vals) x fn))))
 
 (defun some-val (pred-or-preds vals x &optional (fn #'funcall)) 
     "Check if the provided predicate(s) evaluate(s) to t for 
         some of the provided values in relation to the expected value"
     (cond ((null vals) nil)
         ((funcall fn pred-or-preds (car vals) x) t)
-        (t (some-val pred-or-preds (cdr vals) x))))
+        (t (some-val pred-or-preds (cdr vals) x fn))))
 
 (defun some-not-val (pred-or-preds vals x &optional (fn #'funcall)) 
     "Check if the provided predicate(s) evaluate(s) to nil for 
         some of the provided values in relation to the expected value"
     (cond ((null vals) nil)
         ((funcall fn pred-or-preds (car vals) x)
-            (some-not-val pred-or-preds (cdr vals) x))
+            (some-not-val pred-or-preds (cdr vals) x fn))
         (t t)))
 
 (defun all-pred (preds val x) 
