@@ -139,5 +139,5 @@
                 (gethash :pass result-table)
                 (gethash :fail result-table))))
         (format test-suite-output-stream (funcall print-colour result-str))
-        (format test-suite-output-stream "~%Powered by (c) Ltest - v.1.0 - 2024.08.29~%~%"))
+        (format test-suite-output-stream "~%Powered by (c)Ltest - v.1.0 - 2024.08.29~%~%"))
     (setf *current-test-suite-out* t))
