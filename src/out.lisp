@@ -28,10 +28,10 @@
                             (getf assertion :check)
                             (getf assertion :pred)))
                         (exp (getf assertion :exp))
-                        (expected (format nil "    Expected ~a of type ~a~%" 
+                        (expected (format nil "    Expected ~s of type ~a~%" 
                             exp (type-of exp)))
                         (val (getf assertion :val))
-                        (got-val (format nil "    Got value ~a of type ~a~%"
+                        (got-val (format nil "    Got value ~s of type ~a~%"
                             val (type-of val)))
                         (err (getf assertion :error))
                         (error (if err
