@@ -174,7 +174,7 @@ Checks
  Assertion
   |#
 
-(defun assertion (&key (check #'check-true) (pred #'equalp) (val nil) (exp t))
+(defun assertion (&key (check #'check-true) (pred #'equal) val (exp t))
     "Execute the requested check and return a list the test result, assertion 
         arguments and, if applicable, errors."
     (handler-case

@@ -30,12 +30,10 @@
         :name "Test colour black"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:black "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:black "teststring" nil))
                 :exp (length "teststring")))))
@@ -45,12 +43,10 @@
         :name "Test colour red"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:red "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:red "teststring" nil))
                 :exp (length "teststring")))))
@@ -60,12 +56,10 @@
         :name "Test colour green"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:green "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:green "teststring" nil))
                 :exp (length "teststring")))))
@@ -75,12 +69,10 @@
         :name "Test colour yellow"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:yellow "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:yellow "teststring" nil))
                 :exp (length "teststring")))))
@@ -90,12 +82,10 @@
         :name "Test colour blue"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:blue "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:blue "teststring" nil))
                 :exp (length "teststring")))))
@@ -105,12 +95,10 @@
         :name "Test colour magenta"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:magenta "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:magenta "teststring" nil))
                 :exp (length "teststring")))))
@@ -120,12 +108,10 @@
         :name "Test colour cyan"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:cyan "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:cyan "teststring" nil))
                 :exp (length "teststring")))))
@@ -135,12 +121,10 @@
         :name "Test colour white"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:white "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:white "teststring" nil))
                 :exp (length "teststring")))))
@@ -150,12 +134,10 @@
         :name "Test colour gray"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:gray "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:gray "teststring" nil))
                 :exp (length "teststring")))))
@@ -165,12 +147,10 @@
         :name "Test colour bright-red"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-red "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-red "teststring" nil))
                 :exp (length "teststring")))))
@@ -180,12 +160,10 @@
         :name "Test colour bright-green"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-green "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-green "teststring" nil))
                 :exp (length "teststring")))))
@@ -195,12 +173,10 @@
         :name "Test colour bright-yellow"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-yellow "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-yellow "teststring" nil))
                 :exp (length "teststring")))))
@@ -210,12 +186,10 @@
         :name "Test colour bright-blue"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-blue "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-blue "teststring" nil))
                 :exp (length "teststring")))))
@@ -225,12 +199,10 @@
         :name "Test colour bright-magenta"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-magenta "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-magenta "teststring" nil))
                 :exp (length "teststring")))))
@@ -240,12 +212,10 @@
         :name "Test colour bright-cyan"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-cyan "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-cyan "teststring" nil))
                 :exp (length "teststring")))))
@@ -255,12 +225,10 @@
         :name "Test colour bright-white"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-white "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-white "teststring" nil))
                 :exp (length "teststring")))))
