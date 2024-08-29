@@ -6,7 +6,7 @@
 
 (defun test-colours ()
     (ltest:test-set
-        :name "Test add colour escape chars"
+        :name "Test colour add colour escape chars"
         :tests (list
             (test-black)
             (test-red)
@@ -27,7 +27,7 @@
 
 (defun test-black ()
     (ltest:test
-        :name "Test black"
+        :name "Test colour black"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -44,7 +44,7 @@
 
 (defun test-red ()
     (ltest:test
-        :name "Test red"
+        :name "Test colour red"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -61,7 +61,7 @@
 
 (defun test-green ()
     (ltest:test
-        :name "Test green"
+        :name "Test colour green"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -78,7 +78,7 @@
 
 (defun test-yellow ()
     (ltest:test
-        :name "Test yellow"
+        :name "Test colour yellow"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -102,7 +102,7 @@
 
 (defun test-blue ()
     (ltest:test
-        :name "Test blue"
+        :name "Test colour blue"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -119,7 +119,7 @@
 
 (defun test-magenta ()
     (ltest:test
-        :name "Test magenta"
+        :name "Test colour magenta"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -136,7 +136,7 @@
 
 (defun test-cyan ()
     (ltest:test
-        :name "Test cyan"
+        :name "Test colour cyan"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -153,7 +153,7 @@
 
 (defun test-white ()
     (ltest:test
-        :name "Test white"
+        :name "Test colour white"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -170,7 +170,7 @@
 
 (defun test-gray ()
     (ltest:test
-        :name "Test gray"
+        :name "Test colour gray"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -187,7 +187,7 @@
 
 (defun test-bright-red ()
     (ltest:test
-        :name "Test bright-red"
+        :name "Test colour bright-red"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -204,7 +204,7 @@
 
 (defun test-bright-green ()
     (ltest:test
-        :name "Test bright-green"
+        :name "Test colour bright-green"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -221,7 +221,7 @@
 
 (defun test-bright-yellow ()
     (ltest:test
-        :name "Test bright-yellow"
+        :name "Test colour bright-yellow"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -238,7 +238,7 @@
 
 (defun test-bright-blue ()
     (ltest:test
-        :name "Test bright-blue"
+        :name "Test colour bright-blue"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -255,7 +255,7 @@
 
 (defun test-bright-magenta ()
     (ltest:test
-        :name "Test bright-magenta"
+        :name "Test colour bright-magenta"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -272,7 +272,7 @@
 
 (defun test-bright-cyan ()
     (ltest:test
-        :name "Test bright-cyan"
+        :name "Test colour bright-cyan"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
@@ -289,7 +289,7 @@
 
 (defun test-bright-white ()
     (ltest:test
-        :name "Test bright-white"
+        :name "Test colour bright-white"
         :assertions (list
             (ltest:assertion
                 :check #'ltest:check-true
