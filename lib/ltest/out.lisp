@@ -116,17 +116,19 @@
     "Based on the results of a test set, create a reporting string 
         and push to output."
     (setf *current-test-set-out* output-stream)
-    (let ((test-set-ouput-stream (get-output-stream :set))
+    (let* ((test-set-ouput-stream (get-output-stream :set))
+            (separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "~a~%Test set ~a with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~%" 
-                (make-string  *output-width* :initial-element #\-)
+                "~a~%Test set ~a with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~a~%~%" 
+                separator
                 (gethash :name result-table)
                 (+ (gethash :pass result-table) (gethash :fail result-table) (gethash :invalid result-table))
                 (gethash :result result-table)
                 (gethash :pass result-table)
                 (gethash :fail result-table)
-                (gethash :invalid result-table))))
+                (gethash :invalid result-table)
+                separator)))
         (format test-set-ouput-stream (funcall print-colour result-str)))
     (setf *current-test-set-out* nil))
 
@@ -134,15 +136,18 @@
     "Based on the results of a test suite, create a reporting string 
         and push to output."
     (setf *current-test-suite-out* output-stream)
-    (let ((test-suite-output-stream (get-output-stream :suite))
+    (let* ((test-suite-output-stream (get-output-stream :suite))
+            (separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "~%TEST SUITE ~a WITH ~a TEST SETS~%RESULT: ~a~%PASSED: ~a        FAILED: ~a~%~%" 
+                "~%~a~%TEST SUITE ~a WITH ~a TEST SETS~%RESULT: ~a~%PASSED: ~a        FAILED: ~a~%~a~%~%" 
+                separator
                 (string-upcase (gethash :name result-table))
                 (+ (gethash :pass result-table) (gethash :fail result-table))
                 (gethash :result result-table)
                 (gethash :pass result-table)
-                (gethash :fail result-table))))
+                (gethash :fail result-table)
+                separator)))
         (format test-suite-output-stream (funcall print-colour result-str))
         (format test-suite-output-stream "~%Powered by (c) Ltest - v.1.0 - 2024.08.29~%~%"))
     (setf *current-test-suite-out* t))
