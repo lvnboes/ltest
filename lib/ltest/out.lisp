@@ -6,22 +6,13 @@
 
 (defparameter *output-width* 80)
 
-(defparameter *current-test-suite-out* t)
+(defparameter *output-stream* t)
 
-(defparameter *current-test-set-out* nil)
+(defun get-current-output-stream ()
+    *output-stream*)
 
-(defparameter *current-test-out* nil)
-
-(defun get-output-stream (level)
-    "Determine which output stream to use, based on the 'level'
-        (test, test set or test suite)."
-    (case level
-        (:test (cond (*current-test-out* *current-test-out*)
-            (*current-test-set-out* *current-test-set-out*)
-            (*current-test-suite-out* *current-test-suite-out*)))
-        (:set (cond (*current-test-set-out* *current-test-set-out*)
-            (*current-test-suite-out* *current-test-suite-out*)))
-        (:suite *current-test-suite-out*)))
+(defun set-current-output-stream (new-output-stream)
+    (setf *new-output-stream*))
 
 (defun get-colour-fun (result)
     "Determine which coloration function to use based on the result"
@@ -86,12 +77,10 @@
             failed-str padding 
             invalid-str)))
 
-(defun test-out (result-table &optional (output-stream nil))
+(defun test-out (result-table)
     "Based on the results of a unit test, create a reporting string 
         and push to output."
-    (setf *current-test-set-out* output-stream)
-    (let* ((test-output-stream (get-output-stream :test))
-            (name (gethash :name result-table))
+    (let* ((name (gethash :name result-table))
             (result (gethash :result result-table))
             (print-colour (get-colour-fun result))
             (result-prefix (case result 
@@ -109,15 +98,12 @@
                 ""))
             (test-result-message 
                 (format nil "~a~a~a" result-prefix details result-suffix)))
-        (format test-output-stream (funcall print-colour test-result-message))
-        (setf *current-test-out* nil)))
+        (format t (funcall print-colour test-result-message))))
 
-(defun test-set-out (result-table &optional (output-stream nil))
+(defun test-set-out (result-table)
     "Based on the results of a test set, create a reporting string 
         and push to output."
-    (setf *current-test-set-out* output-stream)
-    (let* ((test-set-ouput-stream (get-output-stream :set))
-            (separator (make-string  *output-width* :initial-element #\-))
+    (let* ((separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
                 "~a~%Test set '~a' with ~a tests~%Result: ~a~%Passed: ~a    Failed: ~a    Invalid: ~a~%~%~%" 
@@ -128,8 +114,7 @@
                 (gethash :pass result-table)
                 (gethash :fail result-table)
                 (gethash :invalid result-table))))
-        (format test-set-ouput-stream (funcall print-colour result-str)))
-    (setf *current-test-set-out* nil))
+        (format t (funcall print-colour result-str))))
 
 (defun test-suite-out (result-table &optional (output-stream nil))
     "Based on the results of a test suite, create a reporting string 

@@ -208,11 +208,11 @@ Test
             assertions)
         result-table))
 
-(defun test (&key name assertions (output-stream nil))
+(defun test (&key name assertions)
     "Process the assertion results into a result table, call on the output 
         function to display results and return the result table"
     (let ((result-table (to-test-result-table assertions name)))
-        (out:test-out result-table output-stream)
+        (out:test-out result-table)
         result-table))
 
 #|
@@ -234,11 +234,11 @@ Test Set
             (if (= total (gethash :pass result-table)) :pass :fail))
         result-table))
 
-(defun test-set (&key name tests (output-stream nil))
+(defun test-set (&key name tests)
     "Process the test results into a result table, call on the output 
         function to display results and return the result table"
     (let ((result-table (to-test-set-result-table tests name)))
-        (out:test-set-out result-table output-stream)
+        (out:test-set-out result-table)
         result-table))
 
 #|
@@ -259,10 +259,24 @@ Test Suite
             (if (= total (gethash :pass result-table)) :pass :fail))
         result-table))
 
-(defun test-suite (&key name test-sets (output-stream 0))
+(defun test-suite (&key name test-sets)
     "Process the test-set results into a result table, call on the output 
         function to display results and return the result table"
-    (let ((result-table (to-test-suite-result-table test-sets name))
-            (use-output (if (equal output-stream 0) t output-stream)))
+    (let ((result-table (to-test-suite-result-table test-sets name)))
         (out:test-suite-out result-table use-output)
         (eq (gethash :result result-table) :pass)))
+
+#|
+Output to file instead of terminal
+ |#
+
+ (defun to-file (&key file-name ltests)
+    (let ((previous-output out:get-current-output-stream))
+        (with-open-file (stream file-name 
+            :direction :output
+            :if-exists :supersede
+            :if-does-not-exist :create)
+            (out:set-current-output-stream)
+            (defun ltests))
+        (out:set-current-output-stream previous-output)
+    ))
