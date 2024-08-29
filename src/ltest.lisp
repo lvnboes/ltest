@@ -21,100 +21,151 @@ Checks
 ;;Simple checks
 
 (defun check-true (pred val exp) 
+    "Apply predicate to value"
     (funcall pred val exp))
 
 (defun check-false (pred val exp)
+    "Apply predicate to value 
+        and return opposite"
     (not (funcall pred val exp)))
 
 ;;Iterative checks
 
 (defun check-all-v (pred vals exp) 
+    "Apply predicate to values and 
+        check if all evaluate to t"
     (liter:all-val pred vals exp))
 
 (defun check-no-v (pred vals exp) 
+    "Apply predicate to values and 
+        check if none evaluate to t"
     (liter:no-val pred vals exp))
 
 (defun check-some-v (pred vals exp) 
+    "Apply predicate to values and 
+        check if some evaluate to t"
     (liter:some-val pred vals exp))
 
 (defun check-some-not-v (pred vals exp) 
+    "Apply predicate to values and 
+        check if some don't evaluate to t"
     (liter:some-not-val pred vals exp))
 
 (defun check-all-p (pred vals exp) 
+    "Apply all predicates to value and 
+        check if all evaluate to t"
     (liter:all-pred pred vals exp))
 
 (defun check-no-p (pred vals exp) 
+    "Apply all predicates to value and 
+        check if none evaluate to t"
     (liter:no-pred pred vals exp))
 
 (defun check-some-p (pred vals exp) 
+    "Apply all predicates to value and 
+        check if some evaluate to t"
     (liter:some-pred pred vals exp))
 
 (defun check-some-not-p (pred vals exp) 
+    "Apply all predicates to value and 
+        check if some don't evaluate to t"
     (liter:some-not-pred pred vals exp))
 
 ;;Double iterative checks
 
 (defun check-all-v-all-p (preds vals exp)
+    "Apply all predicates to all values and check if all 
+        predicates evaluate to t for all values"
     (funcall (liter:iter-2 #'liter:all-val #'liter:all-pred)
         preds vals exp))
 
 (defun check-all-v-no-p (preds vals exp)
+    "Apply all predicates to all values and check if none of the 
+        predicates evaluate to t for all values"
     (funcall (liter:iter-2 #'liter:all-val #'liter:no-pred)
         preds vals exp))
 
 (defun check-all-v-some-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to t for all values"
     (funcall (liter:iter-2 #'liter:all-val #'liter:some-pred)
         preds vals exp))
 
 (defun check-all-v-some-not-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to nil for all values"
     (funcall (liter:iter-2 #'liter:all-val #'liter:some-not-pred)
         preds vals exp))
 
 (defun check-no-v-all-p (preds vals exp)
+    "Apply all predicates to all values and check if all 
+    predicates evaluate to t for none of the values"
     (funcall (liter:iter-2 #'liter:no-val #'liter:all-pred)
         preds vals exp))
 
 (defun check-no-v-no-p (preds vals exp)
+    "Apply all predicates to all values and check if none of the 
+        predicates evaluate to t for none of the values"
     (funcall (liter:iter-2 #'liter:no-val #'liter:no-pred)
         preds vals exp))
 
 (defun check-no-v-some-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to t for none of the values"
     (funcall (liter:iter-2 #'liter:no-val #'liter:some-pred)
         preds vals exp))
 
 (defun check-no-v-some-not-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to nil for none of the values"
     (funcall (liter:iter-2 #'liter:no-val #'liter:some-not-pred)
         preds vals exp))
 
 (defun check-some-v-all-p (preds vals exp)
+    "Apply all predicates to all values and check if all 
+        predicates evaluate to t for some of the values"
     (funcall (liter:iter-2 #'liter:some-val #'liter:all-pred)
         preds vals exp))
 
 (defun check-some-v-no-p (preds vals exp)
+    "Apply all predicates to all values and check if none of the 
+        predicates evaluate to t for some of the values"
     (funcall (liter:iter-2 #'liter:some-val #'liter:no-pred)
         preds vals exp))
 
 (defun check-some-v-some-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to t for some of the values"
     (funcall (liter:iter-2 #'liter:some-val #'liter:some-pred)
         preds vals exp))
 
 (defun check-some-v-some-not-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to nil for some of the values"
     (funcall (liter:iter-2 #'liter:some-val #'liter:some-not-pred)
         preds vals exp))
 
 (defun check-some-not-v-all-p (preds vals exp)
+    "Apply all predicates to all values and check if all 
+        predicates evaluate to nil for some of the values"
     (funcall (liter:iter-2 #'liter:some-not-val #'liter:all-pred)
         preds vals exp))
 
 (defun check-some-not-v-no-p (preds vals exp)
+    "Apply all predicates to all values and check if none of the 
+        predicates evaluate to nil for some of the values"
     (funcall (liter:iter-2 #'liter:some-not-val #'liter:no-pred)
         preds vals exp))
 
 (defun check-some-not-v-some-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to nil for some of the values"
     (funcall (liter:iter-2 #'liter:some-not-val #'liter:some-pred)
         preds vals exp))
 
 (defun check-some-not-v-some-not-p (preds vals exp)
+    "Apply all predicates to all values and check if some of the 
+        predicates evaluate to t for some of the values"
     (funcall (liter:iter-2 #'liter:some-not-val #'liter:some-not-pred)
         preds vals exp))
 
