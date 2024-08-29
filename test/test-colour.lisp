@@ -33,8 +33,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:black "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -49,8 +48,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:red "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -65,8 +63,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:green "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -81,8 +78,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:yellow "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -97,8 +93,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:blue "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -113,8 +108,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:magenta "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -129,8 +123,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:cyan "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -145,8 +138,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:white "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -161,8 +153,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:gray "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -177,8 +168,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-red "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -193,8 +183,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-green "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -209,8 +198,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-yellow "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -225,8 +213,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-blue "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -241,8 +228,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-magenta "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -257,8 +243,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-cyan "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
@@ -273,8 +258,7 @@
                 :check #'ltest:check-true
                 :pred '>
                 :val (length (colour:bright-white "teststring" t))
-                :exp (length "teststring")
-            )
+                :exp (length "teststring"))
             (ltest:assertion
                 :check #'ltest:check-true
                 :pred '=
