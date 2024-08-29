@@ -83,7 +83,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
 (ltest:test
-    :name "test-1"
+    :name "test-8"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -95,7 +95,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
 (ltest:test
-    :name "test-2"
+    :name "test-9"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -107,7 +107,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
 (ltest:test
-    :name "test-3"
+    :name "test-10"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -119,7 +119,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
 (ltest:test
-    :name "test-4"
+    :name "test-11"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -131,7 +131,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp "abc")))
 (ltest:test
-    :name "test-5"
+    :name "test-12"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -143,7 +143,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
 (ltest:test
-    :name "test-6"
+    :name "test-13"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
@@ -155,7 +155,7 @@
             :check #'ltest:check-true
             :pred '> :val 2 :exp "abc")))
 (ltest:test
-    :name "test-7"
+    :name "test-14"
     :assertions (list
         (ltest:assertion
             :check #'ltest:check-true
