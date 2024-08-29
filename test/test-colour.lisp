@@ -34,7 +34,6 @@
                 :val (length (colour:black "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:black "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -47,7 +46,6 @@
                 :val (length (colour:red "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:red "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -60,7 +58,6 @@
                 :val (length (colour:green "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:green "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -73,7 +70,6 @@
                 :val (length (colour:yellow "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:yellow "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -86,7 +82,6 @@
                 :val (length (colour:blue "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:blue "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -99,7 +94,6 @@
                 :val (length (colour:magenta "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:magenta "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -112,7 +106,6 @@
                 :val (length (colour:cyan "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:cyan "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -125,7 +118,6 @@
                 :val (length (colour:white "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:white "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -138,7 +130,6 @@
                 :val (length (colour:gray "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:gray "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -151,7 +142,6 @@
                 :val (length (colour:bright-red "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-red "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -164,7 +154,6 @@
                 :val (length (colour:bright-green "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-green "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -177,7 +166,6 @@
                 :val (length (colour:bright-yellow "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-yellow "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -190,7 +178,6 @@
                 :val (length (colour:bright-blue "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-blue "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -203,7 +190,6 @@
                 :val (length (colour:bright-magenta "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-magenta "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -216,7 +202,6 @@
                 :val (length (colour:bright-cyan "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-cyan "teststring" nil))
                 :exp (length "teststring")))))
 
@@ -229,6 +214,5 @@
                 :val (length (colour:bright-white "teststring" t))
                 :exp (length "teststring"))
             (ltest:assertion
-                :pred '=
                 :val (length (colour:bright-white "teststring" nil))
                 :exp (length "teststring")))))
