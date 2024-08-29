@@ -315,9 +315,6 @@ Individual tests
                 :val (ltest:check-some-v-some-not-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2.0)
                 :exp t))))
 
-
-
-
 (defun test-check-some-not-v-all-p ()
     (ltest:test
         :name "Test some not v all p"
