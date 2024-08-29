@@ -120,15 +120,14 @@
             (separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "~a~%Test set '~a' with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~a~%~%" 
+                "~a~%Test set '~a' with ~a tests~%Result: ~a~%Passed: ~a    Failed: ~a    Invalid: ~a~%~%~%" 
                 separator
                 (string-downcase (gethash :name result-table))
                 (+ (gethash :pass result-table) (gethash :fail result-table) (gethash :invalid result-table))
                 (gethash :result result-table)
                 (gethash :pass result-table)
                 (gethash :fail result-table)
-                (gethash :invalid result-table)
-                separator)))
+                (gethash :invalid result-table))))
         (format test-set-ouput-stream (funcall print-colour result-str)))
     (setf *current-test-set-out* nil))
 
@@ -140,7 +139,7 @@
             (separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "~%~%~a~%~a~%TEST SUITE '~a' WITH ~a TEST SETS~%RESULT: ~a~%PASSED: ~a        FAILED: ~a~%~a~%~a~%~%" 
+                "~%~%~a~%~a~%TEST SUITE '~a' WITH ~a TEST SETS~%RESULT: ~a~%SETS PASSED: ~a        SETS FAILED: ~a~%~a~%~a~%~%" 
                 separator separator
                 (string-upcase (gethash :name result-table))
                 (+ (gethash :pass result-table) (gethash :fail result-table))
