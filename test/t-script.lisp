@@ -32,8 +32,19 @@
             :pred '> :val 2 :exp 1)
         (ltest:assertion
             :check #'ltest:check-true
-            :pred '> :val 2 :exp 1
-        )
+            :pred '> :val 2 :exp 1)
+        (ltest:assertion
+            :check #'ltest:check-true
+            :pred '> :val 2 :exp 1)
+        (ltest:assertion
+            :check #'ltest:check-true
+            :pred '> :val 2 :exp 1)
+        (ltest:assertion
+            :check #'ltest:check-true
+            :pred '< :val 2 :exp 1)
+        (ltest:assertion
+            :check #'ltest:check-true
+            :pred '> :val 2 :exp 1)
         (ltest:assertion
             :check #'ltest:check-true
             :pred '> :val 2 :exp 1)))
