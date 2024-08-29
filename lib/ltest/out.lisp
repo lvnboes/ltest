@@ -122,7 +122,7 @@
             (result-str (format nil 
                 "~a~%Test set ~a with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~a~%~%" 
                 separator
-                (gethash :name result-table)
+                (string-downcase (gethash :name result-table))
                 (+ (gethash :pass result-table) (gethash :fail result-table) (gethash :invalid result-table))
                 (gethash :result result-table)
                 (gethash :pass result-table)
