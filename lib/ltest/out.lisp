@@ -140,14 +140,14 @@
             (separator (make-string  *output-width* :initial-element #\-))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "~%~a~%TEST SUITE ~a WITH ~a TEST SETS~%RESULT: ~a~%PASSED: ~a        FAILED: ~a~%~a~%~%" 
-                separator
+                "~%~a~%~a~%TEST SUITE ~a WITH ~a TEST SETS~%RESULT: ~a~%PASSED: ~a        FAILED: ~a~%~a~%~a~%~%" 
+                separator separator
                 (string-upcase (gethash :name result-table))
                 (+ (gethash :pass result-table) (gethash :fail result-table))
                 (gethash :result result-table)
                 (gethash :pass result-table)
                 (gethash :fail result-table)
-                separator)))
+                separator separator)))
         (format test-suite-output-stream (funcall print-colour result-str))
         (format test-suite-output-stream "~%Powered by (c) Ltest - v.1.0 - 2024.08.29~%~%"))
     (setf *current-test-suite-out* t))
