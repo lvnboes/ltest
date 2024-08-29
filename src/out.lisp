@@ -4,7 +4,7 @@
 
 (in-package :out)
 
-(defparameter *output-width* 100)
+(defparameter *output-width* 80)
 
 (defun test-result-prefix (test-name result &optional (width *output-width*) (pad-char #\.))
     "Based on the test name and result, create a prefix for the test report"
