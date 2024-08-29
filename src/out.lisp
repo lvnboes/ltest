@@ -29,7 +29,7 @@
                         (predicates (format nil "    With predicate(s) ~a~%"
                             (getf assertion :pred)))
                         (exp (getf assertion :exp))
-                        (expected (format nil "    Expected ~s of type ~a~%" 
+                        (expected (format nil "    Expected value ~s of type ~a~%" 
                             exp (type-of exp)))
                         (val (getf assertion :val))
                         (got-val (format nil "    Got value ~s of type ~a~%"
