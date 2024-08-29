@@ -13,6 +13,8 @@
 (defparameter *current-test-out* nil)
 
 (defun get-output-stream (level)
+    "Determine which output stream to use, based on the 'level'
+        (test, test set or test suite)."
     (case level
         (:test (cond (*current-test-out* *current-test-out*)
             (*current-test-set-out* *current-test-set-out*)
@@ -22,6 +24,7 @@
         (:suite *current-test-suite-out*)))
 
 (defun get-colour-fun (result)
+    "Determine which coloration function to use based on the result"
     (case result
         (:pass #'colour:bright-green)
         (:fail #'colour:bright-red)
@@ -113,6 +116,8 @@
         (setf *current-test-out* nil)))
 
 (defun test-set-out (result-table &optional (output-stream nil))
+    "Based on the results of a test set, create a reporting string 
+        and push to output."
     (setf *current-test-set-out* output-stream)
     (let ((test-set-ouput-stream (get-output-stream :set))
             (print-colour (get-colour-fun (gethash :result result-table)))
@@ -128,6 +133,8 @@
     (setf *current-test-set-out* nil))
 
 (defun test-suite-out (result-table &optional (output-stream nil))
+    "Based on the results of a test suite, create a reporting string 
+        and push to output."
     (setf *current-test-suite-out* output-stream)
     (let ((test-suite-output-stream (get-output-stream :suite))
             (print-colour (get-colour-fun (gethash :result result-table)))
