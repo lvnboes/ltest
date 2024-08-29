@@ -188,7 +188,7 @@ Checks
 Test
  |#
 
-(defun to-result-table (assertion-results) 
+(defun to-test-result-table (assertion-results) 
     (let ((result-table (make-hash-table)))
         (setf (gethash :pass result-table) 0)
         (setf (gethash :fail result-table) 0)
@@ -204,6 +204,6 @@ Test
         result-table))
 
 (defun test (&key name assertions)
-    (let* ((result-table (to-result-table assertions)))
+    (let* ((result-table (to-test-result-table assertions)))
         (setf (gethash :name result-table) name)
         (out:test-result result-table)))
