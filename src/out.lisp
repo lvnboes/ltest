@@ -1,12 +1,33 @@
 (defpackage :out 
     (:use :cl :colour)
-    (:export :test-result))
+    (:export :test-out :test-set-out :test-suite-out))
 
 (in-package :out)
 
 (defparameter *output-width* 80)
 
-(defun test-result-prefix (test-name result &optional (width *output-width*) (pad-char #\.))
+(defparameter *current-test-suite-out* t)
+
+(defparameter *current-test-set-out* nil)
+
+(defparameter *current-test-out* nil)
+
+(defun get-output-stream (level)
+    (case level
+        (:test (cond (*current-test-out* *current-test-out*)
+            (*current-test-set-out* *current-test-set-out*)
+            (*current-test-suite-out* *current-test-suite-out*)))
+        (:set (cond (*current-test-set-out* *current-test-set-out*)
+            (*current-test-suite-out* *current-test-suite-out*)))
+        (:suite *current-test-suite-out*)))
+
+(defun get-colour-fun (result)
+    (case result
+        (:pass #'colour:bright-green)
+        (:fail #'colour:bright-red)
+        (:invalid #'colour:bright-yellow)))
+
+(defun test-out-prefix (test-name result &optional (width *output-width*) (pad-char #\.))
     "Based on the test name and result, create a prefix for the test report"
     (let* ((name-len (length test-name))
             (result-len (length result))
@@ -14,7 +35,7 @@
             (padding (make-string padding-len :initial-element pad-char)))
         (format nil "~a ~a ~a~%" test-name padding result)))
 
-(defun test-result-assertions (assertions &optional (assertion-strings '()))
+(defun test-out-assertions (assertions &optional (assertion-strings '()))
     "Based on the details of the assertions in the test execution, create a detailed report string 
         on all the failed and invalid assertions for inclusion in the tests reporting message 
         and return the assertion report string. Empty if the test passed"
@@ -40,9 +61,9 @@
                             "")))
                     (push (format nil "~a~a~a~a~a" overview predicates expected got-val error)
                         assertion-strings)))
-            (test-result-assertions (cdr assertions) assertion-strings))))
+            (test-out-assertions (cdr assertions) assertion-strings))))
 
-(defun test-result-suffix (pass fail invalid &optional (width *output-width*) (pad-char #\Space))
+(defun test-out-suffix (pass fail invalid &optional (width *output-width*) (pad-char #\Space))
     "Based on number of passed, failed and invalid assertions in the test execution, create a suffix 
         string for the reporting message and return the suffix string. Empty if the test passed."
     (let* ((total-str (format nil "Total assertions: ~a " (+ pass fail invalid)))
@@ -62,32 +83,57 @@
             failed-str padding 
             invalid-str)))
 
-(defun test-result (result-table)
+(defun test-out (result-table &optional (output-stream nil))
     "Based on the results of a unit test, create a reporting string 
         and push to output."
-    (let* ((name (gethash :name result-table))
+    (setf *current-test-set-out* output-stream)
+    (let* ((test-output-stream (get-output-stream :test))
+            (name (gethash :name result-table))
             (result (gethash :result result-table))
             (total (+ (gethash :pass result-table 0) 
                 (gethash :fail result-table 0) 
                 (gethash :invalid result-table 0)))
-            (print-colour (case result
-                (:pass #'colour:bright-green)
-                (:fail #'colour:bright-red)
-                (:invalid #'colour:bright-yellow)))
+            (print-colour (get-colour-fun result))
             (result-prefix (case result 
-                (:pass (test-result-prefix name "[PASS]"))
-                (:fail (test-result-prefix name "[FAIL]"))
-                (:invalid  (test-result-prefix name "[INVD]"))))
+                (:pass (test-out-prefix name "[PASS]"))
+                (:fail (test-out-prefix name "[FAIL]"))
+                (:invalid  (test-out-prefix name "[INVD]"))))
             (details (if (not (equal result :pass))
-                (test-result-assertions (gethash :assertions result-table)) 
+                (test-out-assertions (gethash :assertions result-table)) 
                 ""))
             (result-suffix (if (not (eq result :pass)) 
-                (test-result-suffix 
+                (test-out-suffix 
                     (gethash :pass result-table)
                     (gethash :fail result-table)
                     (gethash :invalid result-table)) 
                 ""))
             (test-result-message 
                 (format nil "~a~a~a" result-prefix details result-suffix)))
-        (format t (funcall print-colour test-result-message))
-    ))
+        (format test-output-stream (funcall print-colour test-result-message))
+        (setf *current-test-out* nil)))
+
+(defun test-set-out (result-table &optional (output-stream nil))
+    (setf *current-test-set-out* output-stream)
+    (let ((test-set-ouput-stream (get-output-stream :set)))
+        (format test-set-ouput-stream 
+            "Test set ~a with ~a tests~%Passed: ~a    Faild: ~a    Invalid: ~a~%~%" 
+            (gethash :name result-table)
+            (+ (gethash :pass result-table) (gethash :fail result-table) (gethash :invalid result-table))
+            (gethash :pass result-table)
+            (gethash :fail result-table)
+            (gethash :invalid result-table)))
+    (setf *current-test-set-out* nil))
+
+(defun test-suite-out (result-table &optional (output-stream nil))
+    (setf *current-test-suite-out* output-stream)
+    (let* ((test-suite-output-stream (get-output-stream :suite))
+            (print-colour (get-colour-fun (gethash :result result-table)))
+            (result-str (format nil 
+                "~%TEST SUITE ~a WITH ~a TEST SETS~%PASSED: ~a        FAILED: ~a~%~%" 
+                (string-upcase (gethash :name result-table))
+                (+ (gethash :pass result-table) (gethash :fail result-table))
+                (gethash :pass result-table)
+                (gethash :fail result-table))))
+        (format test-suite-output-stream (funcall print-colour result-str))
+        (format test-suite-output-stream "~%Powered by (c) Ltest - v.1.0 - 2024.08.29~%"))
+    (setf *current-test-suite-out* t))

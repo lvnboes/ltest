@@ -10,7 +10,7 @@
         :check-some-v-no-p :check-some-v-some-p :check-some-v-some-not-p
         :check-some-not-v-all-p :check-some-not-v-no-p :check-some-not-v-some-p 
         :check-some-not-v-some-not-p
-        :assertion :test))
+        :assertion :test :test-set :test-suite))
 
 (in-package :ltest)
 
@@ -188,22 +188,66 @@ Checks
 Test
  |#
 
-(defun to-test-result-table (assertion-results) 
+(defun to-test-result-table (assertions name) 
     (let ((result-table (make-hash-table)))
+        (setf (gethash :name result-table) name)
         (setf (gethash :pass result-table) 0)
         (setf (gethash :fail result-table) 0)
         (setf (gethash :invalid result-table) 0)
-        (dolist (assertion-result assertion-results)
-            (incf (gethash (getf assertion-result :result) result-table 0)))
+        (dolist (assertion assertions)
+            (incf (gethash (getf assertion :result) result-table 0)))
         (setf (gethash :result result-table) 
             (cond ((> (gethash :fail result-table) 0) :fail)
                 ((> (gethash :invalid result-table) 0) :invalid)
                 (t :pass)))
         (setf (gethash :assertions result-table) 
-            assertion-results)
+            assertions)
         result-table))
 
-(defun test (&key name assertions)
-    (let* ((result-table (to-test-result-table assertions)))
+(defun test (&key name assertions (output-stream nil))
+    (let ((result-table (to-test-result-table assertions name)))
+        (out:test-out result-table output-stream)
+        result-table))
+
+#|
+Test Set
+ |#
+
+(defun to-test-set-result-table (tests name)
+    (let ((result-table (make-hash-table))
+            (total (list-length tests)))
         (setf (gethash :name result-table) name)
-        (out:test-result result-table)))
+        (setf (gethash :pass result-table) 0)
+        (setf (gethash :fail result-table) 0)
+        (setf (gethash :invalid result-table) 0)
+        (dolist (test tests)
+            (incf (gethash (gethash :result test) result-table 0)))
+        (setf (gethash :result result-table) 
+            (if (= total (gethash :pass result-table)) :pass :fail))
+        result-table))
+
+(defun test-set (&key name tests (output-stream nil))
+    (let ((result-table (to-test-set-result-table tests name)))
+        (out:test-set-out result-table output-stream)
+        result-table))
+
+#|
+Test Suite
+ |#
+
+(defun to-test-suite-result-table (test-sets name)
+    (let ((result-table (make-hash-table))
+            (total (list-length test-sets)))
+        (setf (gethash :name result-table) name)
+        (setf (gethash :pass result-table) 0)
+        (setf (gethash :fail result-table) 0)
+        (dolist (test-set test-sets)
+            (incf (gethash (gethash :result test-set) result-table 0)))
+        (setf (gethash :result result-table) 
+            (if (= total (gethash :pass result-table)) :pass :fail))
+        result-table))
+
+(defun test-suite (&key name test-sets (output-stream 0))
+    (let ((result-table (to-test-suite-result-table test-sets name))
+            (use-output (if (equal output-stream 0) t output-stream)))
+        (out:test-suite-out result-table use-output)))
