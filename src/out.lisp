@@ -23,9 +23,10 @@
         (progn
             (if (not (eq (getf (car assertions) :result) :pass))
                 (let* ((assertion (car assertions))
-                        (overview (format nil "ASSERTION ~a WITH CHECK ~a AND PRED ~a~%"
+                        (overview (format nil "ASSERTION ~a WITH CHECK ~a~%"
                             (getf assertion :result)
-                            (getf assertion :check)
+                            (getf assertion :check)))
+                        (predicates (format nil "    With predicate(s) ~a~%"
                             (getf assertion :pred)))
                         (exp (getf assertion :exp))
                         (expected (format nil "    Expected ~s of type ~a~%" 
@@ -37,7 +38,7 @@
                         (error (if err
                             (format nil "~a~%" err)
                             "")))
-                    (push (format nil "~a~a~a~a" overview expected got-val error)
+                    (push (format nil "~a~a~a~a~a" overview predicates expected got-val error)
                         assertion-strings)))
             (test-result-assertions (cdr assertions) assertion-strings))))
 
