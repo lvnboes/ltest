@@ -1,6 +1,5 @@
 (ltest:test-suite
     :name "test-suite-1"
-    :output-stream output-stream
     :test-sets (list 
         (ltest:test-set
             :name "test-set-1"
