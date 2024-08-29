@@ -39,8 +39,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:black "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-red ()
     (ltest:test
@@ -56,8 +55,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:red "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-green ()
     (ltest:test
@@ -73,8 +71,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:green "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-yellow ()
     (ltest:test
@@ -90,15 +87,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:yellow "teststring" nil))
-                :exp (length "teststring")
-            ))))
-
-
-
-
-
-
-
+                :exp (length "teststring")))))
 
 (defun test-blue ()
     (ltest:test
@@ -114,8 +103,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:blue "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-magenta ()
     (ltest:test
@@ -131,8 +119,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:magenta "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-cyan ()
     (ltest:test
@@ -148,8 +135,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:cyan "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-white ()
     (ltest:test
@@ -165,8 +151,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:white "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-gray ()
     (ltest:test
@@ -182,8 +167,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:gray "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-red ()
     (ltest:test
@@ -199,8 +183,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-red "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-green ()
     (ltest:test
@@ -216,8 +199,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-green "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-yellow ()
     (ltest:test
@@ -233,8 +215,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-yellow "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-blue ()
     (ltest:test
@@ -250,8 +231,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-blue "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-magenta ()
     (ltest:test
@@ -267,8 +247,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-magenta "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-cyan ()
     (ltest:test
@@ -284,8 +263,7 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-cyan "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))
 
 (defun test-bright-white ()
     (ltest:test
@@ -301,5 +279,4 @@
                 :check #'ltest:check-true
                 :pred '=
                 :val (length (colour:bright-white "teststring" nil))
-                :exp (length "teststring")
-            ))))
+                :exp (length "teststring")))))

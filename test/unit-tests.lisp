@@ -5,5 +5,4 @@
 (ltest:test-suite
     :name "Ltest self test"
     :test-sets (list
-        (test-colour:test-colours)
-        ))
+        (test-colour:test-colours)))
