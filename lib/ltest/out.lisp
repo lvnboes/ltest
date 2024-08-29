@@ -119,7 +119,8 @@
     (let ((test-set-ouput-stream (get-output-stream :set))
             (print-colour (get-colour-fun (gethash :result result-table)))
             (result-str (format nil 
-                "Test set ~a with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~%" 
+                "~a~%Test set ~a with ~a tests~%Result: ~a~%Passed: ~a    Faild: ~a    Invalid: ~a~%~%" 
+                (make-string  *output-width* :initial-element #\-)
                 (gethash :name result-table)
                 (+ (gethash :pass result-table) (gethash :fail result-table) (gethash :invalid result-table))
                 (gethash :result result-table)
