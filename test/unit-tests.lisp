@@ -7,7 +7,8 @@
         :name "Ltest self test"
         :test-sets (list
             (test-colour:test-colours)
-            (test-ltest:test-simple-checks))))
+            (test-ltest:test-simple-checks)
+            (test-ltest:test-iterative-checks))))
 
 (ltest-test-suite)
 

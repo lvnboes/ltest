@@ -1,6 +1,7 @@
 (defpackage :test-ltest
     (:use :cl :ltest)
-    (:export :test-simple-checks))
+    (:export :test-simple-checks
+        :test-iterative-checks))
 
 (in-package :test-ltest)
 
@@ -32,49 +33,37 @@ Test sets
 Individual tests
  |#
 
+;;simple checks
 
 (defun test-check-true () 
     (ltest:test
-        :name "Test check-true"
+        :name "Test check true"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-true '= 1 1)
-                :exp t)
+                :val (ltest:check-true '= 1 1))
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
                 :val (ltest:check-true '= 1 2)
                 :exp nil))))
 
 (defun test-check-false () 
     (ltest:test
-        :name "Test check-false"
+        :name "Test check false"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
                 :val (ltest:check-false '= 1 1)
                 :exp nil)
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-false '= 1 2)
-                :exp t))))
+                :val (ltest:check-false '= 1 2)))))
+
+;;iterative checks
 
 (defun test-check-all-v ()
     (ltest:test
         :name "Test check all values"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-all-v '< (list 1 2 3) 4)
-                :exp t)
+                :val (ltest:check-all-v '< (list 1 2 3) 4))
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
                 :val (ltest:check-all-v '< (list 1 2 3) 2)
                 :exp nil))))
 
@@ -83,13 +72,8 @@ Individual tests
         :name "Test check no values"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-no-v '> (list 1 2 3) 4)
-                :exp t)
+                :val (ltest:check-no-v '> (list 1 2 3) 4))
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
                 :val (ltest:check-no-v '< (list 1 2 3) 2)
                 :exp nil))))
 
@@ -98,14 +82,9 @@ Individual tests
         :name "Test check some values"
         :assertions (list
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-no-v '> (list 1 2 3) 4)
-                :exp t)
+                :val (ltest:check-some-v '< (list 1 2 3) 2))
             (ltest:assertion
-                :check #'ltest:check-true
-                :pred #'eq
-                :val (ltest:check-no-v '< (list 1 2 3) 2)
+                :val (ltest:check-some-v '< (list 1 2 3) 0)
                 :exp nil))))
 
 (defun test-check-some-not-v ()
@@ -113,43 +92,47 @@ Individual tests
         :name "Test check some values not"
         :assertions (list
             (ltest:assertion
-                :check
-                :pred
-                :val
-                :exp t))))
+                :val (ltest:check-some-not-v '< (list 1 2 3) 2))
+            (ltest:assertion
+                :val (ltest:check-some-not-v '< (list 1 2 3) 4)
+                :exp nil))))
+
 (defun test-check-all-p ()
     (ltest:test
         :name "Test check all predicates"
         :assertions (list
             (ltest:assertion
-                :check
-                :pred
-                :val
-                :exp t))))
+                :val (ltest:check-all-p (list 'eq '=) 2 2))
+            (ltest:assertion
+                :val (ltest:check-all-p (list 'eq '=) 2 2.0)
+                :exp nil))))
+
 (defun test-check-no-p ()
     (ltest:test
         :name "Test check no predicates"
         :assertions (list
             (ltest:assertion
-                :check
-                :pred
-                :val
-                :exp t))))
+                :val (ltest:check-no-p (list 'eq '=) 2 3))
+            (ltest:assertion
+                :val (ltest:check-no-p (list 'eq '=) 2 2.0)
+                :exp nil))))
+
 (defun test-check-some-p ()
     (ltest:test
         :name "Test check some predicates"
         :assertions (list
             (ltest:assertion
-                :check
-                :pred
-                :val
-                :exp t))))
+                :val (ltest:check-some-p (list 'eq '=) 2 2.0))
+            (ltest:assertion
+                :val (ltest:check-some-p (list 'eq '=) 2 3)
+                :exp nil))))
+
 (defun test-check-some-not-p ()
     (ltest:test
         :name "Test check some predicates not"
         :assertions (list
             (ltest:assertion
-                :check
-                :pred
-                :val
-                :exp t))))
+                :val (ltest:check-some-not-p (list 'eq '=) 2 2.0))
+            (ltest:assertion
+                :val (ltest:check-some-not-p (list 'eq '=) 2 2)
+                :exp nil))))
