@@ -174,6 +174,8 @@ Checks
   |#
 
 (defun assertion (&key (check #'check-true) (pred #'equalp) (val nil) (exp t))
+    "Execute the requested check and return a list the test result, assertion 
+        arguments and, if applicable, errors."
     (handler-case
         (if (funcall check pred val exp)
             (list :result :pass 
@@ -189,6 +191,8 @@ Test
  |#
 
 (defun to-test-result-table (assertions name) 
+    "Process the test name and assertion results into a result table 
+        and return the table"
     (let ((result-table (make-hash-table)))
         (setf (gethash :name result-table) name)
         (setf (gethash :pass result-table) 0)
@@ -205,6 +209,8 @@ Test
         result-table))
 
 (defun test (&key name assertions (output-stream nil))
+    "Process the assertion results into a result table, call on the output 
+        function to display results and return the result table"
     (let ((result-table (to-test-result-table assertions name)))
         (out:test-out result-table output-stream)
         result-table))
@@ -214,6 +220,8 @@ Test Set
  |#
 
 (defun to-test-set-result-table (tests name)
+    "Process the test set name and test results into a result table 
+        and return the table"
     (let ((result-table (make-hash-table))
             (total (list-length tests)))
         (setf (gethash :name result-table) name)
@@ -227,6 +235,8 @@ Test Set
         result-table))
 
 (defun test-set (&key name tests (output-stream nil))
+    "Process the test results into a result table, call on the output 
+        function to display results and return the result table"
     (let ((result-table (to-test-set-result-table tests name)))
         (out:test-set-out result-table output-stream)
         result-table))
@@ -236,6 +246,8 @@ Test Suite
  |#
 
 (defun to-test-suite-result-table (test-sets name)
+    "Process the test suite name and test set results into a result table 
+        and return the table"
     (let ((result-table (make-hash-table))
             (total (list-length test-sets)))
         (setf (gethash :name result-table) name)
@@ -248,6 +260,8 @@ Test Suite
         result-table))
 
 (defun test-suite (&key name test-sets (output-stream 0))
+    "Process the test-set results into a result table, call on the output 
+        function to display results and return the result table"
     (let ((result-table (to-test-suite-result-table test-sets name))
             (use-output (if (equal output-stream 0) t output-stream)))
         (out:test-suite-out result-table use-output)))
