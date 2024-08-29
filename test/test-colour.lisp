@@ -6,7 +6,7 @@
 
 (defun test-colours ()
     (ltest:test-set
-        :name "Test add colour escape chars"
+        :name "Add colour escape chars"
         :tests (list
             (test-black)
             (test-red)
