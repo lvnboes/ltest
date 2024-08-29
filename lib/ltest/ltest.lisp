@@ -264,4 +264,5 @@ Test Suite
         function to display results and return the result table"
     (let ((result-table (to-test-suite-result-table test-sets name))
             (use-output (if (equal output-stream 0) t output-stream)))
-        (out:test-suite-out result-table use-output)))
+        (out:test-suite-out result-table use-output)
+        (eq (gethash :result result-table) :pass)))
