@@ -93,9 +93,6 @@
     (let* ((test-output-stream (get-output-stream :test))
             (name (gethash :name result-table))
             (result (gethash :result result-table))
-            (total (+ (gethash :pass result-table 0) 
-                (gethash :fail result-table 0) 
-                (gethash :invalid result-table 0)))
             (print-colour (get-colour-fun result))
             (result-prefix (case result 
                 (:pass (test-out-prefix name "[PASS]"))
