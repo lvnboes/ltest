@@ -126,10 +126,10 @@
             :pred '> :val 2 :exp 1)
         (ltest:assertion
             :check #'ltest:check-true
-            :pred '> :val 1 :exp 2)
+            :pred '> :val 2 :exp "abc")
         (ltest:assertion
             :check #'ltest:check-true
-            :pred '> :val 2 :exp "abc")))
+            :pred '> :val 1 :exp 2)))
 (ltest:test
     :name "test-12"
     :assertions (list
