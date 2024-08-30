@@ -9,7 +9,7 @@
         :name "Test custom predicates"
         :tests (list
             (test-hash-table-equal-p)
-            (test-hash-table-equal-p)
+            (test-hash-table-not-equal-p)
         )
     ))
 
