@@ -2,6 +2,13 @@
 (load "./test/test-colour.lisp")
 (load "./test/test-ltest.lisp")
 
+(defpackage :unit-tests
+    (:use :cl :test-colour :test-ltest)
+    (:export :ltest-test-suite))
+
+(in-package :unit-tests)
+
+
 (defun ltest-test-suite ()
     (ltest:test-suite
         :name "Ltest self test"
