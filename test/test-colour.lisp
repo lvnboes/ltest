@@ -39,7 +39,7 @@
 
 (defun test-red ()
     (ltest:test
-        :name "Test colour red"
+        :name "Test colour-red"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -51,7 +51,7 @@
 
 (defun test-green ()
     (ltest:test
-        :name "Test colour green"
+        :name "Test colour-green"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -63,7 +63,7 @@
 
 (defun test-yellow ()
     (ltest:test
-        :name "Test colour yellow"
+        :name "Test colour-yellow"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -75,7 +75,7 @@
 
 (defun test-blue ()
     (ltest:test
-        :name "Test colour blue"
+        :name "Test colour-blue"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -87,7 +87,7 @@
 
 (defun test-magenta ()
     (ltest:test
-        :name "Test colour magenta"
+        :name "Test colour-magenta"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -99,7 +99,7 @@
 
 (defun test-cyan ()
     (ltest:test
-        :name "Test colour cyan"
+        :name "Test colour-cyan"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -111,7 +111,7 @@
 
 (defun test-white ()
     (ltest:test
-        :name "Test colour white"
+        :name "Test colour-white"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -123,7 +123,7 @@
 
 (defun test-gray ()
     (ltest:test
-        :name "Test colour gray"
+        :name "Test colour-gray"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -135,7 +135,7 @@
 
 (defun test-bright-red ()
     (ltest:test
-        :name "Test colour bright-red"
+        :name "Test colour-bright-red"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -147,7 +147,7 @@
 
 (defun test-bright-green ()
     (ltest:test
-        :name "Test colour bright-green"
+        :name "Test colour-bright-green"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -159,7 +159,7 @@
 
 (defun test-bright-yellow ()
     (ltest:test
-        :name "Test colour bright-yellow"
+        :name "Test colour-bright-yellow"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -171,7 +171,7 @@
 
 (defun test-bright-blue ()
     (ltest:test
-        :name "Test colour bright-blue"
+        :name "Test colour-bright-blue"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -183,7 +183,7 @@
 
 (defun test-bright-magenta ()
     (ltest:test
-        :name "Test colour bright-magenta"
+        :name "Test colour-bright-magenta"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -195,7 +195,7 @@
 
 (defun test-bright-cyan ()
     (ltest:test
-        :name "Test colour bright-cyan"
+        :name "Test colour-bright-cyan"
         :assertions (list
             (ltest:assertion
                 :pred '>
@@ -207,7 +207,7 @@
 
 (defun test-bright-white ()
     (ltest:test
-        :name "Test colour bright-white"
+        :name "Test colour-bright-white"
         :assertions (list
             (ltest:assertion
                 :pred '>

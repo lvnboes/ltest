@@ -59,7 +59,7 @@ Individual tests
 
 (defun test-check-true () 
     (ltest:test
-        :name "Test check true"
+        :name "Test check-true"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-true '= 1 1))
@@ -69,7 +69,7 @@ Individual tests
 
 (defun test-check-false () 
     (ltest:test
-        :name "Test check false"
+        :name "Test check-false"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-false '= 1 1)
@@ -81,7 +81,7 @@ Individual tests
 
 (defun test-check-all-v ()
     (ltest:test
-        :name "Test check all values"
+        :name "Test check-all-v"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-v '< (list 1 2 3) 4))
@@ -91,7 +91,7 @@ Individual tests
 
 (defun test-check-no-v ()
     (ltest:test
-        :name "Test check no values"
+        :name "Test check-no-v"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-v '> (list 1 2 3) 4))
@@ -101,7 +101,7 @@ Individual tests
 
 (defun test-check-some-v ()
     (ltest:test
-        :name "Test check some values"
+        :name "Test check-some-v"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-v '< (list 1 2 3) 2))
@@ -111,7 +111,7 @@ Individual tests
 
 (defun test-check-some-not-v ()
     (ltest:test
-        :name "Test check some values not"
+        :name "Test check-some-not-v"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-v '< (list 1 2 3) 2))
@@ -121,7 +121,7 @@ Individual tests
 
 (defun test-check-all-p ()
     (ltest:test
-        :name "Test check all predicates"
+        :name "Test check-all-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-p (list 'eq '=) 2 2))
@@ -131,7 +131,7 @@ Individual tests
 
 (defun test-check-no-p ()
     (ltest:test
-        :name "Test check no predicates"
+        :name "Test check-no-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-p (list 'eq '=) 2 3))
@@ -141,7 +141,7 @@ Individual tests
 
 (defun test-check-some-p ()
     (ltest:test
-        :name "Test check some predicates"
+        :name "Test check-some-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-p (list 'eq '=) 2 2.0))
@@ -151,7 +151,7 @@ Individual tests
 
 (defun test-check-some-not-p ()
     (ltest:test
-        :name "Test check some predicates not"
+        :name "Test check-some-not-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-p (list 'eq '=) 2 2.0))
@@ -161,7 +161,7 @@ Individual tests
 
 (defun test-check-all-v-all-p ()
     (ltest:test
-        :name "Test all v all p"
+        :name "Test check-all-v-all-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-v-all-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2))
@@ -174,7 +174,7 @@ Individual tests
 
 (defun test-check-all-v-no-p ()
     (ltest:test
-        :name "Test all v no p"
+        :name "check-all-v-no-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-v-no-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 3))
@@ -187,7 +187,7 @@ Individual tests
 
 (defun test-check-all-v-some-p ()
     (ltest:test
-        :name "Test all v some p"
+        :name "Test check-all-v-some-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-v-some-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2.0))
@@ -200,7 +200,7 @@ Individual tests
 
 (defun test-check-all-v-some-not-p ()
     (ltest:test
-        :name "Test all v some not p"
+        :name "Test check-all-v-some-not-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-all-v-some-not-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2.0))
@@ -213,7 +213,7 @@ Individual tests
 
 (defun test-check-no-v-all-p ()
     (ltest:test
-        :name "Test no v all p"
+        :name "Test check-no-v-all-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-v-all-p (list 'equalp 'equal 'eq '=) (list 2.0 3 1) 2))
@@ -226,7 +226,7 @@ Individual tests
 
 (defun test-check-no-v-no-p ()
     (ltest:test
-        :name "Test no v no p"
+        :name "Test check-no-v-no-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-v-no-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2))
@@ -239,7 +239,7 @@ Individual tests
 
 (defun test-check-no-v-some-p ()
     (ltest:test
-        :name "Test no v some p"
+        :name "Test check-no-v-some-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-v-some-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 3))
@@ -252,7 +252,7 @@ Individual tests
 
 (defun test-check-no-v-some-not-p ()
     (ltest:test
-        :name "Test no v some not p"
+        :name "Test check-no-v-some-not-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-no-v-some-not-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2))
@@ -265,7 +265,7 @@ Individual tests
 
 (defun test-check-some-v-all-p ()
     (ltest:test
-        :name "Test some v all p"
+        :name "Test check-some-v-all-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-v-all-p (list 'equalp 'equal 'eq '=) (list 2.0 3 2) 2))
@@ -278,7 +278,7 @@ Individual tests
 
 (defun test-check-some-v-no-p ()
     (ltest:test
-        :name "Test some v no p"
+        :name "Test check-some-v-no-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-v-no-p (list 'equalp 'equal 'eq '=) (list 3 2 2) 2))
@@ -291,7 +291,7 @@ Individual tests
 
 (defun test-check-some-v-some-p ()
     (ltest:test
-        :name "Test some v some p"
+        :name "Test check-some-v-some-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-v-some-p (list 'equalp 'equal 'eq '=) (list 2 2 2) 2))
@@ -304,7 +304,7 @@ Individual tests
 
 (defun test-check-some-v-some-not-p ()
     (ltest:test
-        :name "Test some v some not p"
+        :name "Test check-some-v-some-not-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-v-some-not-p (list 'equalp 'equal 'eq '=) (list 2 2 2.0) 2))
@@ -317,7 +317,7 @@ Individual tests
 
 (defun test-check-some-not-v-all-p ()
     (ltest:test
-        :name "Test some not v all p"
+        :name "Test check-some-not-v-all-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-v-all-p (list 'equalp 'equal 'eq '=) (list 2.0 3 2) 2))
@@ -329,7 +329,7 @@ Individual tests
 
 (defun test-check-some-not-v-no-p ()
     (ltest:test
-        :name "Test some not v no p"
+        :name "Test check-some-not-v-no-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-v-no-p (list 'equalp 'equal 'eq '=) (list 3 4 2) 2))
@@ -341,7 +341,7 @@ Individual tests
 
 (defun test-check-some-not-v-some-p ()
     (ltest:test
-        :name "Test some not v some p"
+        :name "Test check-some-not-v-some-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-v-some-p (list 'equalp 'equal 'eq '=) (list 3 4 5) 2))
@@ -353,7 +353,7 @@ Individual tests
 
 (defun test-check-some-not-v-some-not-p ()
     (ltest:test
-        :name "Test some-not v some not p"
+        :name "Test check-some-not-v-some-not-p"
         :assertions (list
             (ltest:assertion
                 :val (ltest:check-some-not-v-some-not-p (list 'equalp 'equal 'eq '=) (list 2 2 3) 2))
