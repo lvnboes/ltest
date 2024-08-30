@@ -74,12 +74,12 @@
             :name "Test hash-table-not-equal-p"
             :assertions (list 
                 (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-2)
+                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-2)
                     :exp nil)
                 (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-3))
+                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-3))
                 (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-4))
+                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-4))
                 (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-5))))))
+                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-5))))))
     

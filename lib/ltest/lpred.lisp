@@ -2,7 +2,7 @@
     (:use :cl)
     (:export 
         :not-eq-p :not-eql-p :not-equal-p :not-equalp-p
-        :hash-table-equal-p))
+        :hash-table-equal-p :hash-table-not-equal-p))
 
 (in-package :lpred)
 
