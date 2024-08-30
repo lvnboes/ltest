@@ -132,4 +132,4 @@
                 (gethash :fail result-table)
                 separator separator)))
         (format *output-stream* (funcall print-colour result-str *output-stream*))
-        (format *output-stream* "~%Powered by Ltest - v.1.0.0 - (c) Lieven Boes - 2024.08.29~%~%")))
+        (format *output-stream* "~%Powered by Ltest - v.1.0.0 - 2024.08.29 - (c) Lieven Boes~%~%")))
