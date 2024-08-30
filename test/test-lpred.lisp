@@ -40,13 +40,11 @@
                 (ltest:assertion
                     :val (lpred:hash-table-equal-p hash-table-1 hash-table-2))
                 (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-3)
-                    :exp nil)
-                (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-4)
-                    :exp nil)
-                (ltest:assertion
-                    :val (lpred:hash-table-equal-p hash-table-1 hash-table-5)
+                    :check #'ltest:check-all-v
+                    :val (list 
+                        (lpred:hash-table-equal-p hash-table-1 hash-table-3)
+                        (lpred:hash-table-equal-p hash-table-1 hash-table-4)
+                        (lpred:hash-table-equal-p hash-table-1 hash-table-5))
                     :exp nil)))))
 
 (defun test-hash-table-not-equal-p ()
@@ -74,12 +72,12 @@
             :name "Test hash-table-not-equal-p"
             :assertions (list 
                 (ltest:assertion
-                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-2)
+                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-2
                     :exp nil)
                 (ltest:assertion
-                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-3))
-                (ltest:assertion
-                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-4))
-                (ltest:assertion
-                    :val (lpred:hash-table-not-equal-p hash-table-1 hash-table-5))))))
+                    :check #'ltest:check-all-v
+                    :val (list 
+                        (lpred:hash-table-not-equal-p hash-table-1 hash-table-3)
+                        (lpred:hash-table-not-equal-p hash-table-1 hash-table-4)
+                        (lpred:hash-table-not-equal-p hash-table-1 hash-table-5))))))))
     
