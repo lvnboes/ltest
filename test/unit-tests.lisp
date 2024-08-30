@@ -10,6 +10,7 @@
         :name "Ltest self test"
         :test-sets (list
             (test-colour:test-colours)
+            (test-lpred:test-custom-p)
             (test-ltest:test-simple-checks)
             (test-ltest:test-iterative-checks)
             (test-ltest:test-double-iterative-checks))))
