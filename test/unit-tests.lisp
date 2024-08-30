@@ -13,12 +13,3 @@
             (test-ltest:test-simple-checks)
             (test-ltest:test-iterative-checks)
             (test-ltest:test-double-iterative-checks))))
-
-#|
-Wrap (ltest:to-file) around any test suite, test set or 
-    individual test to write its output to a file
-
-(ltest:to-file
-    :file-name "test.txt"
-    :ltests #'ltest-test-suite)
- |#
