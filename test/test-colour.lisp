@@ -27,7 +27,7 @@
 
 (defun test-black ()
     (ltest:test
-        :name "Test colour black"
+        :name "Test colour-black"
         :assertions (list
             (ltest:assertion
                 :pred '>
