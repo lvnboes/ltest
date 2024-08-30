@@ -22,7 +22,7 @@ Custom predicates
 (defun not-equalp-p (v1 v2)
     (not (equalp v1 v2)))
 
- (defun hash-table-equal-p (t-1 t-2 &optional (predicate #'equal))
+(defun hash-table-equal-p (t-1 t-2 &optional (predicate #'equal))
     "Test equality between two hash tables by testing if they have the same
         size and if the keys of table one when used on table 2 refer to values
         that evaluate to true with the predicate equal (default predicate, can be changed)."
@@ -31,5 +31,10 @@ Custom predicates
             (and (gethash key t-1)
                 (funcall predicate (gethash key t-1) (gethash key t-2))))
         nil))
+
+(defun hash-table-not-equal-p (t1 t2 &optional (predicate #'equal))
+    "Tests non equality between two hash tables by the same principals as
+        hash-table-equal-p."
+    (not (hash-table-equal-p t1 t2 predicate)))
 
 
