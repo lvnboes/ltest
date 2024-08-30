@@ -1,7 +1,3 @@
-(load "./lib/ltest/ltest-load.lisp")
-(load "./test/test-colour.lisp")
-(load "./test/test-ltest.lisp")
-
 (defpackage :unit-tests
     (:use :cl :test-colour :test-ltest)
     (:export :ltest-test-suite))
@@ -17,8 +13,6 @@
             (test-ltest:test-simple-checks)
             (test-ltest:test-iterative-checks)
             (test-ltest:test-double-iterative-checks))))
-
-(ltest-test-suite)
 
 #|
 Wrap (ltest:to-file) around any test suite, test set or 

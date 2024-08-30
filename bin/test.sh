@@ -1,4 +1,5 @@
-#!/usr/bin/sbcl --script
+#!/usr/local/bin/sbcl --script
 
-(load "./lib/ltest/ltest-load.lisp")
-(load "./test/unit-tests.lisp")
+(load "./lib/ltest/init.lisp")
+(load "./test/init.lisp")
+(ltest-test-suite)
