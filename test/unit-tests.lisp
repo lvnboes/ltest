@@ -14,8 +14,3 @@
             (test-ltest:test-simple-checks)
             (test-ltest:test-iterative-checks)
             (test-ltest:test-double-iterative-checks))))
-
-(ltest-test-suite)
-(ltest:to-file
-    :file-name "test-results.txt"
-    :ltest-fn #'ltest-test-suite)
