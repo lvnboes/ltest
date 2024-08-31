@@ -2,7 +2,8 @@
     (:use :cl :ltest)
     (:export :test-simple-checks
         :test-iterative-checks
-        :test-double-iterative-checks))
+        :test-double-iterative-checks
+        :test-testing-levels))
 
 (in-package :test-ltest)
 
@@ -50,6 +51,12 @@ Test sets
             (test-check-some-not-v-no-p)
             (test-check-some-not-v-some-p)
             (test-check-some-not-v-some-not-p))))
+
+(defun test-testing-levels ()
+    (ltest:test-set
+        :name "Test testing levels"
+        :tests (list
+            (test-assertion))))
 
 #|
 Individual tests
@@ -362,3 +369,25 @@ Individual tests
             (ltest:assertion
                 :val (ltest:check-some-not-v-some-not-p (list 'equalp 'equal 'eq '=) (list 3 4 5) 2)
                 :exp nil))))
+
+(defun test-assertion ()
+    (let ((pass (ltest:assertion :val t))
+            (fail (ltest:assertion :val nil))
+            (invalid (ltest:assertion :pred '= :val 1 :exp "test")))
+        (ltest:test
+            :name "Test assertion"
+            :assertions (list
+                (ltest:assertion
+                    :check #'ltest:check-all-v
+                    :val (list (listp pass)
+                        (listp fail)
+                        (listp invalid)))
+                (ltest:assertion
+                    :val (getf pass :result)
+                    :exp :pass)
+                (ltest:assertion
+                    :val (getf fail :result)
+                    :exp :fail)
+                (ltest:assertion
+                    :val (getf invalid :result)
+                    :exp :invalid)))))

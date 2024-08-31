@@ -13,4 +13,5 @@
             (test-lpred:test-custom-p)
             (test-ltest:test-simple-checks)
             (test-ltest:test-iterative-checks)
-            (test-ltest:test-double-iterative-checks))))
+            (test-ltest:test-double-iterative-checks)
+            (test-ltest:test-testing-levels))))
