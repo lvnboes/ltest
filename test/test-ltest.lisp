@@ -56,7 +56,8 @@ Test sets
     (ltest:test-set
         :name "Test testing levels"
         :tests (list
-            (test-assertion))))
+            (test-assertion)
+            (test-to-test-result-table))))
 
 #|
 Individual tests
@@ -391,3 +392,51 @@ Individual tests
                 (ltest:assertion
                     :val (getf invalid :result)
                     :exp :invalid)))))
+
+(defun test-to-test-result-table ()
+    (let* ((pass-a (ltest:assertion :val t))
+            (fail-a (ltest:assertion :val nil))
+            (invalid-a (ltest:assertion :pred '= :val 1 :exp "test"))
+            (name "name")
+            (pass-t-result (make-hash-table))
+            (fail-t-result (make-hash-table))
+            (invalid-t-result (make-hash-table)))
+        (setf (gethash :name pass-t-result) "test")
+        (setf (gethash :result pass-t-result) :pass)
+        (setf (gethash :pass pass-t-result) 1)
+        (setf (gethash :fail pass-t-result) 0)
+        (setf (gethash :invalid pass-t-result) 0)
+        (setf (gethash :assertions pass-t-result) (list pass-a))
+        (setf (gethash :name fail-t-result) "test")
+        (setf (gethash :result fail-t-result) :fail)
+        (setf (gethash :pass fail-t-result) 1)
+        (setf (gethash :fail fail-t-result) 1)
+        (setf (gethash :invalid fail-t-result) 1)
+        (setf (gethash :assertions fail-t-result) (list pass-a fail-a invalid-a))
+        (setf (gethash :name invalid-t-result) "test")
+        (setf (gethash :result invalid-t-result) :invalid)
+        (setf (gethash :pass invalid-t-result) 1)
+        (setf (gethash :fail invalid-t-result) 0)
+        (setf (gethash :invalid invalid-t-result) 1)
+        (setf (gethash :assertions invalid-t-result) (list pass-a invalid-a))
+        (ltest:test
+            :name "Test to-test-result-table"
+            :assertions (list
+                (ltest:assertion
+                    :pred #'lpred:hash-table-equal-p
+                    :val (ltest::to-test-result-table
+                        (list pass-a)
+                        "test")
+                    :exp pass-t-result)
+                (ltest:assertion
+                    :pred #'lpred:hash-table-equal-p
+                    :val (ltest::to-test-result-table
+                        (list pass-a fail-a invalid-a)
+                        "test")
+                    :exp fail-t-result)
+                (ltest:assertion
+                    :pred #'lpred:hash-table-equal-p
+                    :val (ltest::to-test-result-table
+                        (list pass-a invalid-a)
+                        "test")
+                    :exp invalid-t-result)))))
