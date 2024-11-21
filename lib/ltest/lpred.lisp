@@ -36,5 +36,3 @@ Custom predicates
     "Tests non equality between two hash tables by the same principals as
         hash-table-equal-p."
     (not (hash-table-equal-p t1 t2 predicate)))
-
-
