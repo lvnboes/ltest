@@ -4,7 +4,7 @@
 
 (in-package :unit-tests)
 
-
+"test"
 (defun ltest-test-suite ()
     (ltest:test-suite
         :name "Ltest self test"
